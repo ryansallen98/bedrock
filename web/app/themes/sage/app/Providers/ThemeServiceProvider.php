@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Roots\Acorn\Sage\SageServiceProvider;
 use Illuminate\Support\Facades\View;
+use Roots\Acorn\Sage\SageServiceProvider;
 use TailwindMerge\TailwindMerge;
 
 class ThemeServiceProvider extends SageServiceProvider
@@ -18,7 +18,7 @@ class ThemeServiceProvider extends SageServiceProvider
         parent::register();
 
         // Register TailwindMerge instance
-        $this->app->singleton('tw', fn() => TailwindMerge::instance());
+        $this->app->singleton('tw', fn () => TailwindMerge::instance());
 
         // Register Blade icon components
         $this->app->register(\BladeUI\Icons\BladeIconsServiceProvider::class);

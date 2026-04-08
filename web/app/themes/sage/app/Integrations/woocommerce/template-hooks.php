@@ -5,7 +5,6 @@
  *
  * Action/filter hooks used for WooCommerce functions/templates.
  *
- * @package WooCommerce/Templates
  * @version 2.1.0
  */
 

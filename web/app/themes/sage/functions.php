@@ -39,7 +39,7 @@ Application::configure()
         App\Providers\AcfServiceProvider::class,
     ])
     ->boot();
-    
+
 /*
 |--------------------------------------------------------------------------
 | Register Sage Theme Files

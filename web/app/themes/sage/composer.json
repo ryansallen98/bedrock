@@ -38,6 +38,11 @@
       "App\\": "app/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
   "require": {
     "php": ">=8.2",
     "roots/acorn": "^5.0",
@@ -51,7 +56,8 @@
     "ublabs/blade-simple-icons": "^0.186.0"
   },
   "require-dev": {
-    "laravel/pint": "^1.20"
+    "laravel/pint": "^1.20",
+    "phpunit/phpunit": "^11.0"
   },
   "suggest": {
     "log1x/sage-directives": "A collection of useful Blade directives for WordPress and Sage (^1.0)."
@@ -66,6 +72,10 @@
   "scripts": {
     "post-autoload-dump": [
       "Roots\\Acorn\\ComposerScripts::postAutoloadDump"
-    ]
+    ],
+    "test": "phpunit",
+    "test:integration": "env WP_INTEGRATION_TESTS=1 phpunit --group integration",
+    "lint": "pint --test",
+    "lint:fix": "pint"
   }
 }

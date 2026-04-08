@@ -7,17 +7,17 @@ namespace App\Snippets;
  */
 add_action('admin_head', function () {
 
-    if (!function_exists('get_current_screen')) {
+    if (! function_exists('get_current_screen')) {
         return;
     }
 
     $screen = get_current_screen();
 
-    if (!$screen || $screen->post_type !== 'page') {
+    if (! $screen || $screen->post_type !== 'page') {
         return;
     }
 
-    if (!isset($_GET['post'])) {
+    if (! isset($_GET['post'])) {
         return;
     }
 

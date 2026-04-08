@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/ts/app.ts'])
   </head>
 
-  <body @php(body_class())>
+  <body @php(body_class('antialiased'))>
     @php(wp_body_open())
 
     <div id="app">

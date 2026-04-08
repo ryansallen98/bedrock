@@ -1,0 +1,41 @@
+## 1.0.8 — 2026-04-08
+
+- TypeScript: **`Window.Alpine`** typing in **`env.d.ts`**; stricter **`tsconfig.json`** (`noUnusedLocals`, `noUnusedParameters`, `noImplicitReturns`, `noFallthroughCasesInSwitch`, `noUncheckedIndexedAccess`); **`npm run build`** runs **`typecheck`** before **`vite build`**. Deduplicate **`env.d.ts`** asset modules.
+
+## 1.0.7 — 2026-04-08
+
+- Vitest: Shadpine UI component tests live under **`resources/ts/components/__tests__/`** (e.g. `accordion.test.ts`). **`vitest.config.js`** comment clarifies glob; rules **`10-testing-mandatory.mdc`**, **`14-shadpine-ui.mdc`**, and docs updated.
+
+## 1.0.6 — 2026-04-08
+
+- Accordion content: **Tailwind/CSS** height animation via **grid-template-rows** (`0fr`/`1fr`); `aria-hidden` + **`inert`** when closed. Remove unused **`@alpinejs/collapse`** registration from `app.ts`.
+
+## 1.0.5 — 2026-04-08
+
+- Rebrand in-house UI kit to **Shadpine UI** (Alpine components inspired by shadcn/ui). Rule **`14-shadpine-ui.mdc`**, skill **`shadpine-ui`**; docs and agent hubs updated.
+
+## 1.0.4 — 2026-04-08
+
+- **`14-shadcn-ui-blade-alpine.mdc`:** per-primitive accessibility checklist; document new widgets in **`docs/components/{name}.md`**.
+- Repo **`docs/components/`** UI kit catalog + **`docs/INDEX.md`**.
+
+## 1.0.3 — 2026-04-08
+
+- Agent rule **`14-shadcn-ui-blade-alpine.mdc`** + skill **`shadcn-ui-blade-alpine`**: in-house shadcn/ui → Blade + Alpine conventions (`primitive/`, `resources/ts/components`, `config/classes`, Vitest).
+- Fix accordion styled **content** wrapper: apply merged classes on `primitive.content`.
+- Vitest: **`resources/ts/components/accordion.test.ts`** for accordion Alpine state.
+
+## 1.0.2 — 2026-04-08
+
+- EditorConfig: explicit JS/TS/CSS/JSON/YAML sections; repo root `.editorconfig`.
+- Prettier + `prettier-plugin-tailwindcss`; `npm run format` / `format:check`; `.prettierignore` excludes Blade/PHP `app/`.
+- Mandatory rules `11-frontend-formatting.mdc`, skill `prettier-tailwind`; CI and `npm run test:theme` run `format:check`.
+
+## 1.0.1 — 2026-04-08
+
+- Add PHPUnit (default + optional WordPress integration suite), Vitest, `vitest.config.js`, and sample tests.
+- Root `npm run test:theme` / `test:theme:integration`; CI workflow `theme-tests.yml`.
+
+## 1.0.0
+
+- Initial starter theme release.

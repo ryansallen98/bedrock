@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Enable once from repo root: git config core.hooksPath scripts/githooks
+set -euo pipefail
+ROOT="$(git rev-parse --show-toplevel)"
+exec "$ROOT/scripts/check-agent-mirrors.sh"

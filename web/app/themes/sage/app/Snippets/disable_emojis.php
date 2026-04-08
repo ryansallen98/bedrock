@@ -17,17 +17,17 @@ add_action('init', function () {
     // Remove from TinyMCE.
     add_filter('tiny_mce_plugins', function ($plugins) {
         if (is_array($plugins)) {
-            return array_diff($plugins, array('wpemoji'));
+            return array_diff($plugins, ['wpemoji']);
         } else {
-            return array();
+            return [];
         }
     });
 
     // Remove from dns-prefetch.
     add_filter('wp_resource_hints', function ($urls, $relation_type) {
-        if ('dns-prefetch' === $relation_type) {
+        if ($relation_type === 'dns-prefetch') {
             $emoji_svg_url = apply_filters('emoji_svg_url', 'https://s.w.org/images/core/emoji/2/svg/');
-            $urls = array_diff($urls, array($emoji_svg_url));
+            $urls = array_diff($urls, [$emoji_svg_url]);
         }
 
         return $urls;

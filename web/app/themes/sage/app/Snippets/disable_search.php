@@ -8,11 +8,11 @@ use WP_Block_Type_Registry;
 add_action(
     'parse_query',
     function ($query, $error = true) {
-        if (is_search() && !is_admin()) {
+        if (is_search() && ! is_admin()) {
             $query->is_search = false;
             $query->query_vars['s'] = false;
             $query->query['s'] = false;
-            if (true === $error) {
+            if ($error === true) {
                 $query->is_404 = true;
             }
         }
@@ -36,7 +36,7 @@ add_filter('get_search_form', '__return_empty_string', 999);
 add_action(
     'init',
     function () {
-        if (!function_exists('unregister_block_type') || !class_exists('WP_Block_Type_Registry')) {
+        if (! function_exists('unregister_block_type') || ! class_exists('WP_Block_Type_Registry')) {
             return;
         }
         $block = 'core/search';

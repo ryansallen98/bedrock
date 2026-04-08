@@ -2,11 +2,11 @@
 
 namespace App\Snippets;
 
-add_filter('use_block_editor_for_post', __NAMESPACE__ . '\\disable_gutenberg_for_specific_template', 10, 2);
+add_filter('use_block_editor_for_post', __NAMESPACE__.'\\disable_gutenberg_for_specific_template', 10, 2);
 
 function disable_gutenberg_for_specific_template($use_block_editor, $post)
 {
-    if (!$post || $post->post_type !== 'page') {
+    if (! $post || $post->post_type !== 'page') {
         return $use_block_editor;
     }
 

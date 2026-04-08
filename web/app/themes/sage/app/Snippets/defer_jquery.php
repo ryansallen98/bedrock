@@ -3,7 +3,7 @@
 namespace App\Snippets;
 
 add_action('wp_enqueue_scripts', function () {
-    if (!is_admin()) {
+    if (! is_admin()) {
         wp_deregister_script('jquery');
         wp_register_script(
             'jquery',

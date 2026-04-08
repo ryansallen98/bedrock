@@ -1,0 +1,24 @@
+name: Agent mirror drift
+
+on:
+  push:
+    paths:
+      - ".cursor/**"
+      - ".claude/**"
+      - "scripts/check-agent-mirrors.sh"
+      - "scripts/sync-agent-mirrors.sh"
+  pull_request:
+    paths:
+      - ".cursor/**"
+      - ".claude/**"
+      - "scripts/check-agent-mirrors.sh"
+      - "scripts/sync-agent-mirrors.sh"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify Cursor ↔ Claude mirrors
+        run: ./scripts/check-agent-mirrors.sh

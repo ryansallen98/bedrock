@@ -19,10 +19,8 @@ function extractColorTokens(cssSource) {
 }
 
 export default function paletteFromTheme(options = {}) {
-  const {
-    cssPath = 'resources/css/theme.css',
-    themeJsonPath = 'public/build/assets/theme.json',
-  } = options;
+  const { cssPath = 'resources/css/theme.css', themeJsonPath = 'public/build/assets/theme.json' } =
+    options;
 
   return {
     name: 'palette-from-theme',
@@ -56,7 +54,6 @@ export default function paletteFromTheme(options = {}) {
       data.settings.color.palette = palette;
 
       writeFileSync(jsonFile, JSON.stringify(data, null, 2));
-      // eslint-disable-next-line no-console
       console.log(`✔ Injected ${palette.length} colors into ${themeJsonPath}`);
     },
   };

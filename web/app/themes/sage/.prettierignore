@@ -1,0 +1,14 @@
+node_modules
+vendor
+public
+package-lock.json
+.phpunit.cache
+
+# PHP / Blade — use Laravel Pint (PHP) and EditorConfig; Prettier does not own Blade here
+app
+resources/views
+tests
+*.php
+
+# WordPress / i18n binary-ish outputs
+resources/lang/*.mo

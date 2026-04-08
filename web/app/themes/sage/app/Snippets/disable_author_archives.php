@@ -18,7 +18,7 @@ add_filter('the_author_posts_link', 'get_the_author', 1000, 0);
 
 // Remove the author pages from the WP 5.5+ sitemap.
 add_filter('wp_sitemaps_add_provider', function ($provider, $name) {
-    if ('users' === $name) {
+    if ($name === 'users') {
         return false;
     }
 

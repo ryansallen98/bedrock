@@ -1,0 +1,53 @@
+name: Sage theme tests
+
+on:
+  push:
+    paths:
+      - "web/app/themes/sage/**"
+      - ".github/workflows/theme-tests.yml"
+  pull_request:
+    paths:
+      - "web/app/themes/sage/**"
+
+jobs:
+  sage:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web/app/themes/sage
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mbstring, xml, ctype, json
+          coverage: none
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: web/app/themes/sage/package-lock.json
+
+      - name: Composer install (theme)
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: npm ci (theme)
+        run: npm ci
+
+      - name: Pint (PHP)
+        run: composer run lint
+
+      - name: ESLint + Prettier (check)
+        run: npm run lint
+
+      - name: PHPUnit (default suite)
+        run: composer test
+
+      - name: Vitest
+        run: npm run test
+
+      - name: TypeScript check
+        run: npm run typecheck
