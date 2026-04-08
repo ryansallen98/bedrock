@@ -10,18 +10,16 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
-    "ignoreDeprecations": "6.0",
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "allowJs": true,
     "types": ["vite/client", "node"],
-    "baseUrl": ".",
     "paths": {
-      "@scripts/*": ["resources/ts/*"],
-      "@styles/*": ["resources/css/*"],
-      "@fonts/*": ["resources/fonts/*"],
-      "@images/*": ["resources/images/*"]
+      "@scripts/*": ["./resources/ts/*"],
+      "@styles/*": ["./resources/css/*"],
+      "@fonts/*": ["./resources/fonts/*"],
+      "@images/*": ["./resources/images/*"]
     }
   },
   "include": ["resources/ts", "resources/css", "env.d.ts"]
