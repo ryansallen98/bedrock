@@ -46,6 +46,13 @@
   </x-accordion>
 </div>
 
+<x-badge variant="default">Default</x-badge>
+<x-badge variant="secondary">Secondary</x-badge>
+<x-badge variant="destructive" as="a" href="/">Destructive</x-badge>
+<x-badge variant="outline">Outline</x-badge>
+<x-badge variant="ghost" as="a" href="/">Ghost</x-badge>
+<x-badge variant="link" as="a" href="/">Link</x-badge>
+
 {!! get_the_posts_navigation() !!}
 @endsection
 

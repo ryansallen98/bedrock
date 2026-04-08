@@ -15,7 +15,7 @@ class SnippetsServiceProvider extends ServiceProvider
         'security',
         'admin',
         'performance',
-        'frontend'
+        'frontend',
     ];
 
     public function register()

@@ -1,3 +1,7 @@
+## 1.0.10 — 2026-04-08
+
+- **Shadpine UI:** **`x-badge`** — `resources/views/components/badge/index.blade.php`, **`config/classes/badge.php`**. Docs: **`docs/components/badge.md`**, catalog row in **`docs/components/INDEX.md`**.
+
 ## 1.0.9 — 2026-04-08
 
 - **`app/Snippets/`:** group hook files under **`security/`**, **`admin/`**, **`performance/`**, **`frontend/`**, **`integrations/`** (aligned with **`05-theme-php-blade-acf.mdc`**). **`SnippetsServiceProvider`** loads categories in that order; files within each folder load in sorted name order.

@@ -28,6 +28,7 @@
 |-----------|---------------------|---------------|
 | Accordion | [Accordion](https://ui.shadcn.com/docs/components/accordion) | [accordion.md](accordion.md) |
 | Alert | [Alert](https://ui.shadcn.com/docs/components/alert) | [alert.md](alert.md) |
+| Badge | [Badge](https://ui.shadcn.com/docs/components/badge) | [badge.md](badge.md) |
 | Button | [Button](https://ui.shadcn.com/docs/components/button) | [button.md](button.md) |
 
 ## Adding a component
