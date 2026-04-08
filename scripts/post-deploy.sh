@@ -3,9 +3,9 @@ set -e
 cd "$(dirname "$0")"
 
 # Check if the theme is already active, and activate it if not
-if ! wp theme is-active theme; then
+if ! wp theme is-active sage; then
     echo "Activating the theme..."
-    wp theme activate theme
+    wp theme activate sage
 else
     echo "The theme is already active"
 fi

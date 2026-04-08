@@ -9,7 +9,7 @@ echo "📦 Installing Composer dependencies for Bedrock..."
 composer install
 
 # 2. Go to Sage theme directory
-THEME_PATH="web/app/themes/theme"
+THEME_PATH="web/app/themes/sage"
 
 if [ ! -d "$THEME_PATH" ]; then
   echo "❌ Theme directory not found at $THEME_PATH"
