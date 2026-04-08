@@ -1,0 +1,43 @@
+---
+description: Mandatory PHPUnit (theme) and Vitest (TS/JS) — new code ships with passing tests
+alwaysApply: true
+---
+
+# Mandatory testing (PHPUnit + Vitest)
+
+## Scope
+
+Applies to **first-party** code under **`web/app/themes/{THEME_SLUG}/`** and **`web/app/plugins/*/`** (when a package has a test harness). Vendor and Composer dependencies are excluded.
+
+## PHP (PHPUnit)
+
+- **Non-trivial PHP** (new classes, changed behavior, composers, services, ACF shaping, REST, security-sensitive logic): **must** have automated tests; **must** pass **`composer test`** (or the package’s documented equivalent) before the task is complete.
+- **Trivial-only** exceptions (rare): pure renames, comment-only edits, or config whitespace — never use this to skip tests for new behavior.
+- **Sage theme** (`web/app/themes/{THEME_SLUG}/`):
+  - Default suite: **`composer test`** from the theme directory — loads **`phpunit.xml.dist`**, **`tests/bootstrap.php`** (Composer autoload only; **no DB**).
+  - **WordPress integration:** **`composer run test:integration`** — sets **`WP_INTEGRATION_TESTS=1`**, loads Bedrock **`wp-load.php`**; requires valid **`.env`** and database. Use for tests that need `add_action`, `$wpdb`, etc.
+  - New flexible/layout work: follow **`05-theme-php-blade-acf.mdc`** — **`tests/Flexible/`** with empty/broken payload coverage.
+  - New ACFE Gutenberg blocks: **`12-acf-blocks.mdc`** — **`tests/Blocks/`** with empty/missing **`$block`**, preview, and safe fallbacks.
+- **New/changed tests** live in the same commit as the behavior they protect.
+- Use **`PHPUnit\Framework\Attributes\Group`** (not docblock `@group`) for groups such as **`integration`**.
+- **Iterating:** run **`./vendor/bin/phpunit --filter=MethodName`** or a **single test file** while editing; finish with **`composer test`** for the full default suite.
+- **Do not** remove tests or delete test files without **explicit user approval** — they are part of the contract for this template.
+- Aim for **happy path, failure path, and edge cases** on non-trivial logic. After focused tests pass, suggest the **full** theme check (**`composer test`**, **`npm run test:theme`** from repo root) before merge when appropriate.
+
+## TypeScript / JavaScript (Vitest)
+
+- Theme uses **Vite**; **Vitest** is the standard unit test runner for **`resources/ts/**/*.ts`** (and `.js` if present).
+- **Any new or materially changed** TS/JS that contains logic (Alpine modules, helpers, utilities, data transforms — not a one-line re-export): **must** include or update tests; **`npm run test`** **must pass** before the task is complete.
+- **Commands** (from **`web/app/themes/{THEME_SLUG}/`**): **`npm run lint`** (ESLint + Prettier check — **`13-mandatory-lint.mdc`**), **`npm run test`** (CI-style **`vitest run`**), **`npm run test:watch`** during development, **`npm run typecheck`** (`tsc --noEmit`) before merge.
+- Test files: **`*.test.ts`**, **`*.spec.ts`** (or `.js`) under **`resources/`**, discovered by **`vitest.config.js`** (including **`resources/**/__tests__/**`** for component modules). **`passWithNoTests: false`** — do not leave the tree without tests when TS changes ship.
+- Prefer **pure functions** and small modules so **`environment: 'node'`** stays sufficient; use **`jsdom`** (or project-standard DOM env) only when testing DOM-bound code, and document the choice in the test file or skill.
+
+## Before merge / “done”
+
+From the theme directory, in order when relevant: **`composer run lint`** (Pint when theme PHP changed) → **`composer test`** → **`npm run lint`** (ESLint + Prettier check when TS/JS/CSS/JSON in scope changed) → **`npm run test`** → **`npm run typecheck`** → **`npm run build`**. Root **`composer run lint`** when Bedrock PHP outside the theme changed per project norms. Lint + format: **`13-mandatory-lint.mdc`**, **`11-frontend-formatting.mdc`**. See **`AGENTS.md`** for Boost-style agent habits.
+
+## First-party plugins
+
+When a plugin under **`web/app/plugins/{slug}/`** gains non-trivial PHP or bundled TS: add **`composer test`** / **`npm test`** (or documented equivalents) in the **same pass** as the feature; mirror this policy in that package’s README.
+
+**Skills:** **`testing-php-vitest`**, **`linting-php-eslint`**.

@@ -1,0 +1,33 @@
+---
+description: TypeScript/SCSS builds, tests, strict_types for first-party plugins and themes
+alwaysApply: true
+---
+
+# TypeScript, SCSS, tests, strict PHP (Sections B & F)
+
+Applies to new first-party code under `web/app/plugins/` and `web/app/themes/`, and expanded admin/front-end behavior — unless the user waives (e.g. plain JS only).
+
+## TypeScript → built JavaScript
+
+- Author bundled/interactive code in TypeScript (not giant hand-maintained `.js` as source).
+- Build with Vite, `@wordpress/scripts`, or esbuild; ship minified/prod assets.
+- Document `npm run build`, `npm test`, `npm run typecheck` in README or `package.json`.
+- Enqueue **built** assets, not raw `src/` TS.
+
+## SCSS → CSS (plugins)
+
+- Plugin styles: SCSS (e.g. `resources/scss/`) → built `.css` in `dist/` (or equivalent). Built CSS is not source of truth.
+- One build command should emit both JS and CSS when both exist.
+
+## Frontend tests
+
+- Theme: **Vitest** + **`npm run test`** / **`npm run typecheck`** — required for new or changed TS/JS logic. **`npm run build`** runs **`typecheck`** before **Vite** so TS errors block production output. **Lint + format:** **`npm run lint`** (ESLint + Prettier check) — **`13-mandatory-lint.mdc`**, skills **`linting-php-eslint`**, **`prettier-tailwind`**. Full testing policy: **`10-testing-mandatory.mdc`**, skill **`testing-php-vitest`**.
+- Plugins may use Vitest, Jest, `node:test`, Playwright — same bar: tests pass before done.
+
+## PHP
+
+- Every new PHP file: `declare(strict_types=1);` after `<?php` and file docblock.
+- Non-trivial PHP: PHPUnit; **`composer test`** must pass. Sage: **`tests/`**, **`phpunit.xml.dist`**, integration via **`composer run test:integration`** when WP is required.
+- Full policy: **`10-testing-mandatory.mdc`**.
+
+Plugin scaffold, templates, and git: `04-wordpress-plugins.mdc` + skill `wordpress-plugins`.

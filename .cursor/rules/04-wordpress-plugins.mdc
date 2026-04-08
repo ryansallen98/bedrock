@@ -1,0 +1,57 @@
+---
+description: First-party plugins — agent scaffold, admin/frontend templates, overrides
+globs: web/app/plugins/**/*
+alwaysApply: false
+---
+
+# WordPress first-party plugins (Sections G & H)
+
+Also follow `02-typescript-php-build.mdc`, `03-scaffold-git-versioning.mdc`, and **`10-testing-mandatory.mdc`** (PHPUnit / Vitest when the plugin ships PHP or TS).
+
+## Agent scaffold (same commit as initial code)
+
+Mirror `{REFERENCE_PLUGIN}` / `logical-media-folders` when present:
+
+- `CLAUDE.md` (plugin root) — product, bootstrap file, namespace, REST prefix.
+- `.claude/CLAUDE.md`, `.claude/rules/plugin-agents.md`, optional `.claude/skills/wordpress-plugin/SKILL.md`
+- `.claude/settings.json` (npm, composer, wp)
+- `.cursor/mcp.json` aligned with root (no secrets)
+- `.cursor/rules/wordpress-plugin.mdc` when the plugin folder is the workspace
+- `templates/admin/`, `templates/frontend/`, `README.md`, `.gitignore`
+- `git init` only for standalone repos
+
+Do not strip TS/SCSS, tests, versioning, or MCP entries without approval.
+
+## Templates — no HTML in domain classes
+
+Use `templates/` + loader. `templates/admin/` = wp-admin; `templates/frontend/` = shortcodes, blocks, public HTML.
+
+### Frontend override order
+
+1. Child: `{stylesheet_directory}/{$plugin_slug}/templates/frontend/{path}`
+2. Parent: `{template_directory}/{$plugin_slug}/templates/frontend/{path}`
+3. Plugin: `{plugin_root}/templates/frontend/{path}`
+
+`{$plugin_slug}` = directory name; document in README. Loader: locate → include; consistent `$args` / `extract`.
+
+### Required header on `templates/*.php`
+
+```php
+<?php
+/**
+ * One-line description.
+ *
+ * Template: frontend/example-partial.php
+ *
+ * @package YourPluginPackage
+ * @version 1.0.0
+ */
+
+declare(strict_types=1);
+
+defined('ABSPATH') || exit;
+```
+
+Bump `@version` when defaults change for theme overrides. Escape: `esc_html`, `esc_attr`, `esc_url`, `wp_kses_post`; i18n with text domain. Admin templates from plugin unless documented otherwise.
+
+Skill: **wordpress-plugins** in `.claude/skills/`.

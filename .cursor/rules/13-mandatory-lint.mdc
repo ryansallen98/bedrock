@@ -1,0 +1,38 @@
+---
+description: Mandatory Laravel Pint (theme PHP) + ESLint (theme TS/JS) — gates match CI and npm run test:theme
+alwaysApply: true
+---
+
+# Mandatory linting (PHP + TypeScript/JavaScript)
+
+## Scope
+
+**Sage theme** (`web/app/themes/{THEME_SLUG}/`). **`{THEME_SLUG}`** = `sage` in this template.
+
+- **PHP:** Laravel **Pint** — theme PHP entrypoints (`*.php` at theme root), **`app/`**, **`config/`**, **`tests/**/*.php`**, etc. **Not** Blade views for formatting; style is still Pint where PHP files are linted. Blade-heavy files: follow **`05-theme-php-blade-acf.mdc`**; run Pint when you touch lintable PHP.
+- **TypeScript / JavaScript:** **ESLint** (flat **`eslint.config.js`**) for **`resources/ts/**`**, **`env.d.ts`**, **`vite.config.js`**, **`vitest.config.js`**, **`vite.plugins/**`**. **Prettier** remains the formatter for JS/TS/CSS/JSON (**`11-frontend-formatting.mdc`**); **`eslint-config-prettier`** avoids rule clashes.
+
+**Bedrock root PHP:** when you change first-party PHP outside the theme, run root **`composer run lint`** (Pint) per project norms (**`bedrock-sage`** skill).
+
+## Commands (theme directory)
+
+| Command | Purpose |
+|---------|---------|
+| `composer run lint` | Pint **`--test`** — must pass before merge when theme PHP in Pint’s paths changed. |
+| `composer run lint:fix` | Pint write — use after editing theme PHP. |
+| `npm run lint:eslint` | ESLint only. |
+| `npm run lint:eslint:fix` | ESLint with **`--fix`**. |
+| `npm run lint` | **ESLint** then **`npm run format:check`** — mandatory gate for front-end asset paths when TS/JS/config JS changed. |
+| `npm run lint:fix` | **`lint:eslint:fix`** then **`npm run format`** (Prettier write). |
+
+## Before merge / “done”
+
+When the task touches the relevant files, all applicable gates **must** pass (same order as **`10-testing-mandatory.mdc`**, with lint explicit):
+
+1. **`composer run lint`** (theme PHP) — or **`composer run lint:fix`** then re-check.
+2. **`npm run lint`** (ESLint + Prettier check) — or **`npm run lint:fix`** then **`npm run lint`**.
+3. **`composer test`** / **`npm run test`** / **`npm run typecheck`** / **`npm run build`** as in **`10-testing-mandatory.mdc`**.
+
+**CI:** `.github/workflows/theme-tests.yml` runs Pint and **`npm run lint`**. **Root:** **`npm run test:theme`** includes both.
+
+**Skill:** **`linting-php-eslint`**.

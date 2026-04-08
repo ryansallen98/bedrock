@@ -1,0 +1,45 @@
+---
+description: Laravel Blade primitives in Sage — components, $attributes, @pushOnce, @aware (with Sage @php rules)
+globs: web/app/themes/**/*.blade.php
+alwaysApply: false
+---
+
+# Blade: Laravel component primitives (Acorn)
+
+Applies alongside **`.cursor/rules/05-theme-php-blade-acf.mdc`** (data in composers, `@php` / `@endphp` safety) and **`06-theme-alpine-vite.mdc`** (no inline app JS).
+
+## `$attributes->merge()` in components
+
+Let consumers pass extra classes/attributes. In anonymous or class components:
+
+```blade
+<div {{ $attributes->merge(['class' => 'alert alert-'.$type]) }}>
+    {{ $message }}
+</div>
+```
+
+## Prefer components over `@include`
+
+`@include` inherits all parent variables (hidden coupling). **Blade components** expose explicit props, attribute bags, and slots.
+
+## `@pushOnce` for scripts/styles keyed per component
+
+Inside `@foreach`, `@push` runs **N** times. Use **`@pushOnce('scripts', 'component-id')`** ... **`@endPushOnce`** (or the stack name your layout uses) so assets load once.
+
+## `@aware` for deeply nested props
+
+Avoid threading the same prop through every layer; use **`@aware`** for props provided by an ancestor component (Laravel 10+).
+
+## View data
+
+Shared data for views belongs in **View Composers** (`App\View\Composers/*`), **flexible** composers (`Composers/Flexible/*`), or **block** composers (`Composers/Blocks/*` — **`12-acf-blocks.mdc`**) — not duplicated across controllers (Sage has no classic MVC controllers for every view). Same rule as Section N in `05-theme-php-blade-acf.mdc`.
+
+## Fragments (optional)
+
+For **htmx** / **Turbo** partial responses, `->fragmentIf(...)` can return a fragment instead of a full layout — only if the project uses that stack.
+
+## WordPress + Blade
+
+When mixing WP template tags with components, keep **escaping** consistent: Laravel `{{ }}` for simple values; use WordPress **`esc_html_e`**, **`esc_attr`**, etc. where the codebase standard expects them for i18n and WP APIs.
+
+Skill: **`acorn-laravel`** (DI/config); **`tailwindcss-development`** for utility classes in component markup.

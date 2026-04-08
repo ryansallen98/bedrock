@@ -1,0 +1,69 @@
+---
+description: Shadpine UI — Alpine + Blade (Sage); shadcn/ui–inspired; primitives, Vitest, a11y
+alwaysApply: true
+---
+
+# Shadpine UI
+
+**Shadpine UI** is this project’s **Alpine.js** component kit **inspired by [shadcn/ui](https://ui.shadcn.com/)** (API, structure, and visuals). It is **conceptually framework-agnostic**: you need **Alpine**, a **templating layer** (this repo uses **Blade** / PHP; you could adapt markup to **Astro**, etc.), and a **styling approach** — **Tailwind** by default (with PHP **Tailwind Merge** as `$tw` here), but the same patterns can use **plain CSS classes** if you replace utilities.
+
+**This template’s implementation** lives under **`web/app/themes/{THEME_SLUG}/`** (`sage` until renamed). **Goal:** mirror named shadcn/ui widgets **1:1** in behavior and override story where practical, without React/Radix.
+
+## Project default
+
+- **Prefer Shadpine UI** (`resources/views/components/`) for interactive and styled UI instead of ad-hoc markup in templates, flexible layouts, and blocks—unless a third-party pattern is explicitly required.
+
+## Layering (shadcn-style split)
+
+| Layer | Responsibility | Location (this repo) |
+|-------|----------------|----------------------|
+| **Primitive** | Accessibility, keyboard behavior, ARIA, state wiring (Alpine `x-data`, events, `x-id`, etc.) | `resources/views/components/{name}/primitive/*.blade.php` |
+| **Styled** | Default Tailwind, slots, `data-slot`, consumer overrides via `$attributes` + **`$tw->merge()`** | `resources/views/components/{name}/*.blade.php` (outside `primitive/`) |
+| **Alpine logic** | Typed `Alpine.data(...)` factories; no heavy logic in Blade | `resources/ts/components/{name}.ts` |
+| **Shared class tokens** | Variant/size/base strings (CVA-style maps) | `config/classes/{name}.php` → `config('classes.{name}')` |
+
+- **Tailwind merge:** `TailwindMerge` is shared to views as **`$tw`** from `ThemeServiceProvider` — merge **base → variants → `$attributes->get('class')`** so consumers can override.
+- **Registration:** each Alpine component factory is imported and registered in **`resources/ts/app.ts`** (e.g. `Alpine.data('accordion', accordion)`).
+
+## Interactivity & accessibility
+
+- Any **interactive** or **stateful** pattern (accordion, dialog, menu, tabs, …) **must** use a **`primitive/`** subtree for a11y and behavior; styled wrappers compose primitives (same idea as Radix + shadcn in React).
+- Target **WCAG 2.2** at the level appropriate to the pattern (keyboard, focus order, roles, labels, `aria-*`, reduced motion where transitions exist). Validate against the [WAI-ARIA APG](https://www.w3.org/WAI/ARIA/apg/) pattern for that widget.
+- **Tests:** ship **Vitest** unit tests for every `resources/ts/components/{name}.ts` module at **`resources/ts/components/__tests__/{name}.test.ts`** (or any path matched by **`vitest.config.js`**). Cover state transitions, edge cases, and keyboard/helper behavior that is pure TS. Complement with manual or browser checks for full a11y when needed.
+
+### Accessibility checklist (each new interactive primitive)
+
+Complete before treating the primitive as done. Record the **APG pattern URL** in **`docs/components/{name}.md`**.
+
+| # | Check |
+|---|--------|
+| 1 | **Pattern:** APG (or equivalent) pattern chosen; behavior matches it unless documented deviation. |
+| 2 | **Keyboard:** All operable parts reachable by Tab (or pattern-specific roving tabindex); documented keys implemented (↑/↓, Home/End, Escape, Enter/Space on native controls, etc.). |
+| 3 | **Roles & states:** Correct `role` (if any), `aria-expanded`, `aria-controls`, `aria-selected`, `aria-hidden`, `aria-labelledby` / `aria-label` as the pattern requires. |
+| 4 | **Names:** Every control has a visible label or **accessible name** (text, `aria-label`, or labelled-by); decorative icons **`aria-hidden="true"`**. |
+| 5 | **Focus:** Focus order logical; **focus visible** (e.g. `focus-visible:ring-*`); no stuck focus inside hidden content. |
+| 6 | **Motion:** **`prefers-reduced-motion`** respected for open/close animations/transitions. |
+| 7 | **Automation:** **Vitest** for `resources/ts/components/{name}.ts`; manual keyboard + SR smoke on a real page for this widget. |
+
+**Human documentation:** add or update **`docs/components/{name}.md`** (props, slots, files, APG link) when adding a component — see **`docs/components/INDEX.md`**.
+
+## Alpine plugins
+
+- Use **`@alpinejs/collapse`**, **`@alpinejs/focus`**, and **any other Alpine official or vetted plugin** when it reduces bugs or improves a11y—**new Composer/npm dependencies still require explicit project approval** per **`01-global-protocols.mdc`**.
+
+## Scope boundaries
+
+- **`resources/views/components/`** is **UI only** (presentation + behavior for design-system widgets). No WordPress queries, business rules, or domain logic—those stay in composers, features, or support classes (**`05-theme-php-blade-acf.mdc`**).
+- Each widget should map to a **named shadcn/ui component** (document the parity target in **`docs/components/{name}.md`** and PR/commit context when adding).
+
+## Commands & gates
+
+- After TS changes: **`npm run lint`**, **`npm run test`**, **`npm run typecheck`** (**`10-testing-mandatory.mdc`**, **`13-mandatory-lint.mdc`**).
+- After Blade/config class changes: theme **`composer run lint`** when PHP is touched; **`npm run build`** if markup/classes affect shipped CSS.
+
+## Cross-references
+
+- Alpine + Vite + WCAG gate: **`06-theme-alpine-vite.mdc`**, skill **`sage-frontend`**.
+- Blade attributes / components: **`09-blade-laravel-components.mdc`**.
+- Skill: **`shadpine-ui`**.
+- Onboarding / export map: **`docs/components/INDEX.md`**, **`docs/INDEX.md`**.

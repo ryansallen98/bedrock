@@ -1,0 +1,20 @@
+---
+description: Template identity — Ryan Allen, THEME_SLUG=sage, tokens, doc checklist
+alwaysApply: true
+---
+
+# Bedrock + Sage — template context
+
+This repository is a **project starter template** used as the base for new projects.
+
+**Author:** Ryan Allen — https://rallendev.com — https://github.com/ryansallen98
+
+**Theme / text domain:** Sage 11–style clone (Roots). In this repo the theme directory and slug are **`sage`**. Treat **`{THEME_SLUG}`** as **`sage`** until the project is cloned for a real site; then rename the theme folder, update the WordPress text domain, Composer/package identifiers, and replace `{THEME_SLUG}` across **`.cursor/rules/`**, **`CLAUDE.md`**, and **`.claude/skills/`**. A request to “change the theme name” means that full rename, not only the folder.
+
+**Tokens:** `{DEV_HOST}` (e.g. `myproject.test`), `{REFERENCE_PLUGIN}` (optional scaffold exemplar, e.g. `logical-media-folders`).
+
+**Rule layout:** Stack protocols live in **`.cursor/rules/*.mdc`** (this file + numbered rules; authoritative). The same `*.mdc` files are **duplicated** under **`.claude/rules/`** for Claude Code (plain copies). Root **`CLAUDE.md`** is the hub. **`.claude/skills/`** holds workflow skills; **`.cursor/skills/`** duplicates them. After edits, run **`./scripts/sync-agent-mirrors.sh`**.
+
+**Per-clone additions (not in these rules):** site mission → e.g. `.claude/rules/site-product.md`; project memory → e.g. `.claude/rules/project-memory.md`; design tokens, ACF prefixes, permalinks, partner docs.
+
+**Recommended docs in any clone:** `docs/INDEX.md`, `docs/overview.md`, `docs/mcp.md`, `docs/frontend-alpine.md`, `docs/quality-audits.md`, `docs/API.md`; optional `docs/errors/`, `docs/warnings/` (see `01-global-protocols.mdc` ULTRATHINK).

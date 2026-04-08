@@ -1,0 +1,32 @@
+---
+description: EditorConfig + mandatory Prettier for theme JS/TS/CSS/JSON (not Blade/PHP)
+alwaysApply: true
+---
+
+# Frontend formatting (EditorConfig + Prettier)
+
+Applies to **`web/app/themes/{THEME_SLUG}/`** front-end sources. **`{THEME_SLUG}`** = `sage` in this template.
+
+## EditorConfig
+
+- **Theme:** `.editorconfig` at theme root — `utf-8`, `lf`, final newline, **2 spaces** for JS/TS/CSS/JSON/YAML; **4 spaces** for `*.php` outside the few 2-space PHP exceptions listed in that file.
+- **Bedrock repo root:** `/.editorconfig` for PHP/JSON/YAML/MD outside the theme.
+- Editors must respect EditorConfig (Cursor/VS Code: EditorConfig extension). **EditorConfig does not** enforce semicolons, quote style, or Tailwind class order — **Prettier does**.
+
+## Prettier (mandatory)
+
+- **Config:** **`.prettierrc`** (JSON) — `singleQuote`, `semi`, `trailingComma`, **`prettier-plugin-tailwindcss`** (class sorting for Tailwind). Add other plugins **after** it in the `plugins` array if needed.
+- **Ignore:** `.prettierignore` — excludes **`app/`**, **`resources/views/`** (Blade), **`tests/*.php`**, **`vendor/`**, **`public/`**, `*.php`. **Do not** run Prettier on Blade or PHP; use **Laravel Pint** for theme PHP (`composer run lint` / `lint:fix` in the theme).
+- **Commands** (from theme directory):
+  - **`npm run format`** — write formatted files.
+  - **`npm run format:check`** — CI / pre-merge; **must pass** when TS/JS/CSS/JSON under Prettier’s scope changed.
+
+## Before merge / “done”
+
+After editing theme **TypeScript, JavaScript, or CSS** (Prettier-covered paths): run **`npm run format`** (or ensure IDE-on-save uses this Prettier config), then **`npm run format:check`** must succeed — or use **`npm run lint`**, which runs **ESLint** then **`format:check`** (**`13-mandatory-lint.mdc`**). Pair with **`10-testing-mandatory.mdc`** (`npm run test`, `npm run typecheck`).
+
+## Root shortcut
+
+From Bedrock root: **`npm run format:theme`** runs **`format:check`** in the theme.
+
+**Skills:** **`sage-frontend`**, **`prettier-tailwind`**, **`linting-php-eslint`**.

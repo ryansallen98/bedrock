@@ -1,0 +1,59 @@
+---
+description: ACFE ACF Gutenberg blocks — block.php, views/blocks/, Composers/Blocks, tests, underscore naming (mirrors flexible)
+alwaysApply: true
+---
+
+# ACFE / ACF Gutenberg blocks (`block.php`)
+
+Same stack discipline as **flexible content** (`flexible.php`), but for **ACF block render** templates. Paths: `web/app/themes/{THEME_SLUG}/`. **`{THEME_SLUG}`** = `sage` in this template.
+
+## Entry: `block.php` (theme root)
+
+- ACFE registers this file as the **block render template** (ACF “Template” / render PHP path).
+- It receives **`$block`**, **`$post_id`**, **`$is_preview`** (and related ACF context). Keep this file **thin**: resolve the Blade view name, pass a minimal payload; **queries, defaults, and field shaping** belong in **View Composers** (see below).
+- Slug: strip the `acf/` prefix from **`$block['name']`** → **`$slug`**. View: **`blocks.{slug}`** → `resources/views/blocks/{slug}.blade.php`.
+
+## Naming (match flexible)
+
+- **Underscores only** in the slug segment that maps to the Blade basename — e.g. **`hero_banner`**, **`featured_posts`** — **not** hyphens. Register ACF block names so that after `acf/` removal the slug matches **`blocks.{slug}`** and the file **`{slug}.blade.php`**.
+- Align **block type JSON** (ACFE `block-types/` or project equivalent), **field names**, **Blade**, **composers**, and **tests** — same as flexible field naming hygiene.
+
+## Blade views
+
+- Location: **`resources/views/blocks/{layout}.blade.php`** (dot notion **`blocks.{layout}`**).
+- **Presentation only** — same as flexible: no `@php` blocks for heavy logic, queries, or `WpLink` bulk. Use **`{{ }}`**, components, conditionals, loops.
+
+## View composers
+
+- Put per-block data shaping in **`App\View\Composers\Blocks/{BlockName}.php`** (PascalCase **`BlockName`** matching the block’s purpose or layout key).
+- Extend **`Roots\Acorn\View\Composer`**; set **`protected static $views = ['blocks.{layout_slug}'];`** (same pattern as flexible composers targeting **`flexible.{layout}`**).
+- Expose safe, typed-ish arrays/strings for the Blade; handle **`$is_preview`** (editor preview) vs front when behavior differs.
+
+## ACF JSON
+
+- Block definitions / field groups owned by the theme: sync under **`app/Integrations/acf/json/`** (e.g. **`block-types/`**, **`field-groups/`**) — **JSON first**, no duplicate `acf_add_local_field_group()` for JSON-backed schema. Hook-only PHP lives in **`Integrations/acf/snippets/`** per **`05-theme-php-blade-acf.mdc`**.
+
+## Safe links & terms
+
+- **`get_term_link()`** may return **`WP_Error`** — use **`App\Support\WpLink`** (or equivalent); **never** **`esc_url()`** on a **`WP_Error`**.
+
+## Tests
+
+- PHPUnit under **`tests/Blocks/`** (mirror **`tests/Flexible/`**): empty/minimal **`$block`**, missing **`$block['name']`**, preview flag, and paths so missing views **do not fatal** (HTML comment fallback in **`block.php`** is expected when the view is absent).
+- Run **`composer test`** from the theme before finishing block work — **`10-testing-mandatory.mdc`**.
+
+## When asked to add a new ACF / Gutenberg block (checklist)
+
+Use this whenever the user requests a **new block**, **ACF block**, or **Gutenberg block** for this theme.
+
+1. **ACF / ACFE:** Add or update synced JSON under **`app/Integrations/acf/json/`** (`block-types/`, linked `field-groups/` as your project does). Set the block’s **name** so WordPress passes **`acf/{slug}`** where **`{slug}`** uses **underscores only** (e.g. `acf/hero_banner`) — that becomes the Blade basename after `block.php` strips `acf/`.
+2. **ACFE block template path:** Point the block’s **render / PHP template** to the theme root **`block.php`** (same idea as flexible → `flexible.php`).
+3. **Blade:** Create **`resources/views/blocks/{slug}.blade.php`** for **`blocks.{slug}`** — presentation only; use **`$block`**, **`$post_id`**, **`$is_preview`** from the view data plus composer output.
+4. **Composer:** Add **`App\View\Composers\Blocks/{BlockName}.php`** with **`protected static $views = ['blocks.{slug}'];`** — queries, `get_field` / block field shaping, preview vs front differences.
+5. **Tests:** Add **`tests/Blocks/{BlockName}Test.php`** (or one test file per block) — empty **`$block`**, missing name, **`is_preview`**, and **`WpLink`** safety where terms appear.
+6. **Verify:** **`composer test`**, editor insert block + front render; no fatals if the Blade file is missing (HTML comment from **`block.php`** is OK during WIP).
+
+## Cross-references
+
+- Flexible layouts: **`flexible.php`**, **`05-theme-php-blade-acf.mdc`**, skill **`acf-flexible`**.
+- This surface: skill **`acf-blocks`**.

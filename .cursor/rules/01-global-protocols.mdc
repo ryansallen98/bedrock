@@ -1,0 +1,68 @@
+---
+description: Prime directive, verification, ULTRATHINK, design stack, TDD, ACF flexible summary, APIs, hygiene
+alwaysApply: true
+---
+
+# Global project protocols (Section A)
+
+## Prime directive
+
+Ingest relevant documentation (repo docs, official docs, MCP-backed research) **before** implementing, debugging, or designing — not after.
+
+## Agent conduct (Boost-style, Bedrock-scoped)
+
+- **Skills:** activate the relevant **`.claude/skills/`** workflow (see **`AGENTS.md`**) as soon as the task matches — do not wait until blocked.
+- **Conventions:** match **sibling files** for structure and naming; **reuse** components/composers/modules before adding new parallel patterns.
+- **Verification:** prefer **tests** over throwaway scripts when behavior is shippable (**`10-testing-mandatory.mdc`**).
+- **Structure / deps:** do not add new **top-level** directories or change **Composer/npm** dependencies without **explicit approval**.
+- **Vite UI stale?** Theme: **`npm run dev`** or **`npm run build`** (**`sage-frontend`**); manifest errors usually need dev server or fresh build.
+- **New docs files:** only when the **user explicitly requests** them (otherwise code + existing hubs).
+- **Tone:** concise answers — important detail only (**`AGENTS.md`**).
+
+## Operational defaults
+
+- **Verify before “done”:** for URL, HTML, or visible-behavior fixes, confirm with local evidence (e.g. curl the path on `{DEV_HOST}`, or PHPUnit/browser). Do not claim a user-visible fix until that check passes.
+- Follow instructions; do not substitute scope without cause.
+- **Security:** destructive or sensitive actions (live API mutations, production data, credentials) require explicit human approval and shown payloads.
+
+## ULTRATHINK (debugging & fix-error)
+
+**Trigger:** user says ULTRATHINK, or debugging, production triage, logs, or error/warning queues.
+
+**When active:** depth on user impact, performance, a11y (WCAG 2.2 AAA), scalability, maintainability. Do not conclude without evidence (terminal, logs, repro). Optional: `docs/errors/`, `docs/warnings/`. Investigate ≥2 hops downstream; prefer TDD.
+
+## Design & frontend (Bedrock + Sage + Tailwind + Alpine)
+
+- Minimalism; clear hierarchy. **Stack:** Blade, Tailwind (tokens), Alpine, component classes — primitives first; **prefer** theme `resources/views/components/` (**Shadpine UI** — **`14-shadpine-ui.mdc`**) for UI widgets.
+- **Alpine:** interaction in Blade; behavior in TS under `web/app/themes/{THEME_SLUG}/resources/ts/alpine/`, bundled via `app.ts`. No inline `<script>`, no `@push` JS, no inline `on*` for theme UI.
+- **A11y:** new interactive UI blocked until applicable WCAG 2.2 AAA (keyboard, focus, semantics/ARIA, motion, contrast, targets). See `docs/frontend-alpine.md`.
+- **Audits:** before merge — `composer run lint` (root), theme **`composer run lint`** (Pint) when theme PHP changed, theme **`npm run lint`** (ESLint + Prettier check) when TS/JS/build JS or Prettier-scoped assets changed, **`npm run test`**, **`npm run typecheck`**, **`npm run build`**, theme **`composer test`** (and **`composer run test:integration`** when WP DB-backed tests apply). See **`10-testing-mandatory.mdc`**, **`13-mandatory-lint.mdc`**, **`11-frontend-formatting.mdc`**, **`AGENTS.md`**. Weekly + pre-deploy: Lighthouse/axe + keyboard/SR smoke. `docs/quality-audits.md`.
+
+## TDD & verification
+
+Significant changes: pre-check (theme **`composer run lint`**, **`npm run lint`**, theme **`composer test`**, **`npm run test`**, typecheck/build) → test first if harness exists → APIs: GET first, document in `docs/`, mutations after approval → post-check → E2E/manual on critical flows. **Mandatory testing:** **`10-testing-mandatory.mdc`**. **Lint + format:** **`13-mandatory-lint.mdc`**, **`11-frontend-formatting.mdc`**.
+
+## ACF flexible (summary)
+
+Composers: `App\View\Composers\Flexible/{Name}.php` → `flexible.{layout_slug}`; Blade under `resources/views/flexible/` stays thin. PHPUnit in `web/app/themes/{THEME_SLUG}/tests/Flexible/` before finishing layouts. `get_term_link()` may be `WP_Error` — use `App\Support\WpLink`, never `esc_url()` on errors. Detail: `05-theme-php-blade-acf.mdc`, skill `acf-flexible`.
+
+## ACF / ACFE Gutenberg blocks (summary)
+
+`block.php` → `blocks.{slug}` → `resources/views/blocks/{layout}.blade.php` (**underscores**, same as flexible). Composers: `App\View\Composers/Blocks/`; tests: `tests/Blocks/`. Detail: **`12-acf-blocks.mdc`**, skill **`acf-blocks`**.
+
+## External APIs & MCP
+
+Context7/official docs first; Perplexity/web after failures. Add `docs/` digests before guessing. Prefer auditable MCP/tools. Mutations: show body, approval, clean up test data.
+
+## Project organization
+
+Separate theme vs Bedrock vs docs vs automation. Document new env categories in `docs/overview.md`; document dev log paths there.
+
+## Version control & docs hygiene
+
+Descriptive commits; run checks before push. Changes to `.cursor/rules/`, `CLAUDE.md`, agent docs → same commit as behavior when possible. Recurring mistakes → one-liners + `docs/`.
+
+## Response format
+
+- **Normal:** one-sentence rationale, then code or steps.
+- **ULTRATHINK:** reasoning chain, edge cases, then verified code.

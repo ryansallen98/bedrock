@@ -1,0 +1,28 @@
+---
+description: Sage theme — Alpine + TS bundling, Vite, Tailwind tokens, WCAG gate
+globs: web/app/themes/**/*.{blade.php,ts,css}
+alwaysApply: false
+---
+
+# Theme Alpine, Vite, Tailwind (Sections P & Q)
+
+Paths under `web/app/themes/{THEME_SLUG}/` (`sage` in this template).
+
+## Alpine + accessibility (P)
+
+- Alpine in Blade; **logic** in `resources/ts/alpine/**/*.ts` (eager-import from `app.ts` when used) and **`resources/ts/components/*.ts`** for **Shadpine UI** primitives (**`14-shadpine-ui.mdc`**, skill **`shadpine-ui`**). Register UI factories from `app.ts`.
+- **Forbidden for theme UI:** inline `<script>`, `@push` script stacks, `onclick`/`onkeydown` for app behavior, non-bundled JS.
+- Use `@alpinejs/collapse`, `@alpinejs/focus` for disclosures and focus traps.
+- **Ship gate:** every applicable WCAG 2.2 AAA criterion for the pattern. `docs/frontend-alpine.md`.
+- Audits: `composer run lint` (root), theme **`npm run format:check`**, `npm run typecheck`, `npm run build`, `docs/quality-audits.md` (**`11-frontend-formatting.mdc`**).
+
+## Vite + Tailwind (Q)
+
+- **Node cwd:** `web/app/themes/{THEME_SLUG}/`
+- `npm run dev` | `npm run build` | **`npm run format:check`** | **`npm run test`** | `npm run typecheck` before merge / audits (**`10-testing-mandatory.mdc`**, **`11-frontend-formatting.mdc`**).
+- Design tokens: `resources/css/theme.css` (`@theme`). Shared classes: `app.css` / `components.css`. This theme uses **Tailwind v4** (`@import "tailwindcss"` / `@theme` — see project `resources/css/app.css`). Deeper utility guidance: **`tailwindcss-development`** skill (`.claude/skills/`; `.cursor/skills/` duplicate).
+- `app.ts` entry; `editor.ts` if present. **`theme.json` is generated** on build — do not hand-edit as source of truth.
+
+See also `05-theme-php-blade-acf.mdc` for Blade/`@php` rules and stack pointers.
+
+Skills: **sage-frontend**, **bedrock-sage**.

@@ -1,0 +1,58 @@
+---
+description: Acorn/Laravel patterns in the Sage theme — DI, config, security PHP, out-of-scope vs WordPress
+globs: web/app/themes/**/*.php
+alwaysApply: false
+---
+
+# Acorn / Laravel (theme PHP only)
+
+Sage uses **Acorn** (Laravel inside WordPress). These patterns apply to `web/app/themes/{THEME_SLUG}/**/*.php` — **not** to generic WordPress plugins unless they also boot Laravel.
+
+## Out of scope (do not default to Laravel here)
+
+- **Eloquent, migrations, `RefreshDatabase`, factories** — persistence is WordPress (posts, meta, options, `$wpdb`). Use WordPress APIs unless the project explicitly adds Eloquent models.
+- **Horizon, queues, scheduled tasks, mail** — only if the theme or a documented package registers them; otherwise prefer WP-Cron, Action Scheduler, or `wp_mail()` patterns.
+- **Implicit route model binding, `Route::resource`** — Acorn routes exist but differ from a full Laravel app; follow existing `routes/*.php` style in the repo.
+
+## Architecture & DI
+
+- Prefer **constructor injection** in service classes, composers, and actions. Avoid `app()` / `resolve()` inside class bodies when a constructor contract can carry the dependency.
+- **Single-purpose invokable or named classes** for discrete operations (aligns with Actions); keep WordPress hooks thin — delegate to injected services.
+- **Code to interfaces** at boundaries (HTTP clients, payment, external APIs); bind implementations in a **ServiceProvider** when the theme introduces such contracts.
+- Prefer **`Illuminate\Support\Str`**, **`Arr`**, and **`Collection`** over ad-hoc helpers when already in a Laravel context. For multibyte text without a helper, use **`mb_*`** or `Str::` methods.
+
+## Configuration
+
+- Call **`env()` only from config files** under `config/`. In application PHP, use **`config('key')`** so values resolve when config is cached.
+- Environment checks: **`app()->isProduction()`** / **`App::environment()`** — not raw `env('APP_ENV')`.
+- Secrets: never commit `.env`; production secrets via host/env injection; read via `config()`.
+
+## Security (Laravel-facing)
+
+- If using the Laravel **HTTP request** layer (Form requests, Acorn controllers): validate input; use **`$request->validated()`** (or equivalent), not raw **`$request->all()`** for persistence.
+- **Authorization:** use policies/gates **when** the theme registers them; for WordPress admin/front, still use **`current_user_can()`** / capabilities as appropriate.
+- **SQL:** if using `DB::` or query builder, **always bind** parameters — never interpolate user input into SQL strings.
+- **Output:** in Blade, default to **`{{ }}`**. Use **`{!! !!}`** only for trusted, pre-sanitized HTML (or `wp_kses_post()`-style content). Align with WordPress escaping rules in the same template where WP data appears.
+
+## Error handling
+
+- Follow **one** established pattern: custom exceptions with `report()` / `render()`, or centralized registration in the Acorn/Laravel bootstrap — **match what the theme already does**.
+
+## Collections
+
+- Prefer **`Collection`** pipelines for in-memory lists when already using Laravel; for WordPress query results, normalize to arrays or small DTOs as the codebase does today.
+
+## PHP style (Acorn / theme)
+
+- **Braces:** always use **`{ }`** on control structures, including single-line bodies.
+- **Types:** explicit **return types** and parameter **type hints** on new/changed methods where compatible with the PHP version.
+- **Constructors:** use **constructor property promotion** when it clarifies DI; remove empty no-op constructors.
+- **Docs:** prefer **PHPDoc** for non-obvious contracts (e.g. array shapes); inline **`//`** only for genuinely complex logic.
+- **Enums:** **TitleCase** case names (e.g. `Pending`, `Published`).
+- **Format:** after editing theme PHP under **`app/`**, run **`composer run lint:fix`** from the theme (Pint) before finalizing — or **`composer run lint`** to check only.
+
+## Consistency first
+
+If sibling providers, composers, or services use a specific pattern, **follow it** before importing new Laravel conventions.
+
+**Related:** `.cursor/rules/05-theme-php-blade-acf.mdc` (Blade/@php/ACF), `.cursor/rules/09-blade-laravel-components.mdc` (Blade components). Skill: **`acorn-laravel`**.

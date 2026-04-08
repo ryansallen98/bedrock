@@ -1,0 +1,50 @@
+---
+description: Sage theme — Support, Integrations, Features, ACF/ACFE, Blade vs composers, @php safety
+globs: web/app/themes/**/*.php
+alwaysApply: false
+---
+
+# Theme PHP, Blade, ACF (Sections I–O)
+
+Paths: `web/app/themes/{THEME_SLUG}/`. Current `{THEME_SLUG}` = `sage`.
+
+## `app/Support/`
+
+Reusable WP API wrappers (safe links, terms), site-wide registries, optional `::register()` from `ThemeServiceProvider`. **Not** feature-only code (`app/Features/`), vendor hooks (`Integrations/.../snippets/`), view data (`View/Composers/`), or one-offs (`Snippets/`). Purpose-named classes; flat `Support/*.php` until subfolders warrant namespaces — do **not** mirror `Snippets/` load-order folders.
+
+## `app/Integrations/{Vendor}/`
+
+Hooks for non-core plugins (ACF, ACFE, Rank Math, Woo, etc.). Snippets under `Integrations/{Name}/snippets/` (`security/`, `admin/`, `performance/`, `frontend/`, `integrations/`) — load after global `Snippets/`, integration A–Z, same per-folder order as `SnippetsServiceProvider`. Vendor classes/services here; register from `App\Providers/*`. ACF JSON: e.g. `Integrations/acf/json/`. **No** vendor-only hooks in global `app/Snippets/`.
+
+## `app/Features/{FeatureName}/`
+
+PascalCase; self-contained (support, admin, REST, snippets) loaded from feature `ServiceProvider`. Register provider in `functions.php` / `Application::configure()`. Feature-only TS: `resources/ts/features/{feature-slug}/`; Alpine may import from `features/`.
+
+## ACF & ACFE (JSON first)
+
+- Sync JSON under `app/Integrations/acf/json/` (`field-groups/`, `post-types/`, `taxonomies/`, etc.). Stable keys; `acfe_autosync` with `"json"` where applicable.
+- **No** PHP registering groups that duplicate JSON — no `acf_add_local_field_group()` for JSON-owned data.
+- ACF **hook** snippets: `app/Integrations/acf/snippets/{security|admin|performance|frontend|integrations}/` via `SnippetsServiceProvider`, not schema in `AcfServiceProvider`.
+- `AcfServiceProvider`: paths, admin assets, non-schema only. Optional PHP exports: `app/Integrations/acf/php/`.
+
+### Flexible front-end
+
+`flexible.php` → `resources/views/flexible/{layout}.blade.php`. Layout keys: **underscores only** (e.g. `featured_posts`). Pages → `the_flexible('FIELD_NAME')` matching JSON. Row logic: `App\View\Composers\Flexible/{Layout}.php`; Blade thin. Tests: `tests/Flexible/`; empty/invalid payloads; `WpLink`; never `esc_url(WP_Error)`. Keep JSON field names consistent across PHP, Blade, tests.
+
+### ACFE Gutenberg blocks (`block.php`)
+
+`block.php` (theme root) → **`blocks.{slug}`** → `resources/views/blocks/{layout}.blade.php`. Same **underscore** naming as flexible. Composers: `App\View\Composers\Blocks/{Name}.php`; tests: `tests/Blocks/`. Full detail: **`12-acf-blocks.mdc`**, skill **`acf-blocks`**.
+
+## Sage pointers (Section M)
+
+`the_flexible` + `flexible.php` + `Composers/Flexible/`. **Blocks:** `block.php` + `resources/views/blocks/` + `Composers/Blocks/`. Tailwind → tokens in `resources/css/theme.css`. Components in `resources/css/components.css`. Blade Icons via `ThemeServiceProvider`.
+
+## Blade vs View Composers (Section N)
+
+**No** data prep in Blade (`@php` for queries, categories, read-time, related posts, `WpLink` bulk, etc.) — use `App\View\Composers/*`, `Composers/Flexible/*`, or **`Composers/Blocks/*`**. Blade: presentation, loops, `{{ }}`, components; minimal `@php(the_content())` OK. Head/early hooks: `Support` / `ServiceProvider` / `Snippets/frontend`. New partials for title/pagination: register views on `Post::$views` (or equivalent). Term links: `App\Support\WpLink`, not `esc_url(get_term_link(...))` when `WP_Error` possible.
+
+## `@php` safety (Section O)
+
+**Never** `@php(expr)` in a file that also has `@php` … `@endphp`. Use block `@php` when `@endphp` exists; `@php(expr)` only if no `@endphp`. Verify WordPress + Acorn helpers (no unwired Laravel facades). Reuse `resources/views/components/` and tokens.
+
+Skills: **acf-flexible**, **acf-blocks**, **sage-frontend** (overlap). Rule **06-theme-alpine-vite.mdc** for TS/CSS/Alpine gates.

@@ -1,0 +1,79 @@
+---
+description: Docs map, MCP, Cursor/Claude layout, .cursorrules note
+alwaysApply: true
+---
+
+# Docs & tooling pointers (Sections R & T)
+
+## Where things live
+
+- **Hub:** root `CLAUDE.md`; **[`AGENTS.md`](../../AGENTS.md)** (agent conduct, skills activation, Pint/PHPUnit habits); Claude entry: `.claude/CLAUDE.md` → hub + **`.claude/rules/bedrock-sage-bootstrap.md`** (mirror contract, sync, **`./scripts/check-agent-mirrors.sh`**, pre-commit, CI).
+- **Cursor:** `.cursor/rules/*.mdc`, `.cursor/skills/`; root `.cursorrules` → rules + hub.
+- **MCP:** keep `.mcp.json` and `.cursor/mcp.json` aligned — see **`docs/mcp.md`** (WP-CLI/Acorn server lives in **`scripts/mcp-wp-acorn/`**).
+- **UI kit catalog:** **`docs/components/INDEX.md`** (**Shadpine UI**); hub **`docs/INDEX.md`**.
+- **Product context:** `.claude/rules/site-product.md` and **`project-memory.md`** (optional per clone; not mirrored from `.cursor/`).
+
+## Quick rule routing
+
+- **Tokens / template identity:** **`00-template-context.mdc`** (`{THEME_SLUG}`, `{DEV_HOST}`).
+- **Theme PHP / Blade / ACF / Support / Integrations / Features:** **`05-theme-php-blade-acf.mdc`**; flexible tests **`10-testing-mandatory.mdc`**; blocks **`12-acf-blocks.mdc`**.
+- **Alpine + TS + Vite + a11y:** **`06-theme-alpine-vite.mdc`**; optional **`docs/frontend-alpine.md`** when present.
+- **Shadpine UI (Alpine + Blade in this repo):** **`14-shadpine-ui.mdc`**, skill **`shadpine-ui`**.
+- **First-party plugins:** **`04-wordpress-plugins.mdc`**, skill **`wordpress-plugins`**.
+- **Conduct, verify-before-done, ULTRATHINK, APIs:** **`01-global-protocols.mdc`**.
+- **Tests + lint + Prettier:** **`10-testing-mandatory.mdc`**, **`13-mandatory-lint.mdc`**, **`11-frontend-formatting.mdc`**.
+
+## Optional docs (when you maintain them)
+
+- **`docs/quality-audits.md`** — recurring PHP/TS/a11y cadence alongside mandatory theme checks (**`10-testing-mandatory.mdc`**).
+- **`docs/errors/`**, **`docs/warnings/`** — fix root cause; correlate downstream; prefer tests (**`10-testing-mandatory.mdc`**).
+- **External APIs** — discover shape before coding; document in **`docs/API.md`** / **`docs/overview.md`**; mutations per **`01-global-protocols.mdc`**.
+
+## Topic → location
+
+| Topic | Location |
+|-------|----------|
+| ACF JSON | `app/Integrations/acf/json/` |
+| ACF hooks | `Integrations/acf/snippets/` |
+| Vendor hooks | `app/Integrations/{Name}/snippets/` |
+| Cross-cutting PHP | `app/Support/` |
+| Flexible | `flexible.php`, `resources/views/flexible/*`, `Composers/Flexible/*` |
+| ACFE blocks | `block.php`, `resources/views/blocks/*`, `Composers/Blocks/*`, `tests/Blocks/*` |
+| New theme features | `app/Features/*`, Providers, `resources/ts/features/*` |
+| New plugins | `04-wordpress-plugins.mdc`, skill `wordpress-plugins`, git allow rules |
+| Plugin templates | `templates/admin` vs `templates/frontend`, theme overrides |
+| API mutations | approval workflow; show payloads |
+| Acorn / Laravel (theme PHP) | `08-acorn-php-laravel.mdc`, skill `acorn-laravel` |
+| Blade components (Laravel) | `09-blade-laravel-components.mdc` |
+| Tailwind v4 (theme) | skill `tailwindcss-development` |
+| Shadpine UI | `resources/views/components/`, `primitive/`, `resources/ts/components/`, `config/classes/`; **`docs/components/`**; **`14-shadpine-ui.mdc`**, skill **`shadpine-ui`** |
+| Mirror drift | `./scripts/check-agent-mirrors.sh`; `.github/workflows/agent-mirrors.yml`; `git config core.hooksPath scripts/githooks` |
+| MCP | `docs/mcp.md`; `.cursor/mcp.json` + `.mcp.json` (WP-CLI/Acorn, Context7, Playwright, GitHub, Perplexity); `npm ci` in `scripts/mcp-wp-acorn/` |
+| PHPUnit + Vitest (mandatory) | `10-testing-mandatory.mdc`; skill `testing-php-vitest`; theme `composer test` / `composer run test:integration`; `npm run test` |
+| EditorConfig + Prettier (mandatory) | `11-frontend-formatting.mdc`; skill `prettier-tailwind`; theme `npm run format` / `format:check`; root `npm run format:theme` |
+| Pint + ESLint (mandatory) | `13-mandatory-lint.mdc`; skill `linting-php-eslint`; theme `composer run lint` / `lint:fix`; theme `npm run lint` / `lint:fix` (ESLint + Prettier check) |
+
+## Docs hygiene
+
+`docs/INDEX.md` — no orphaned docs. Stack commands & rule index: root `CLAUDE.md`. Changes to **`.cursor/rules/`**, root **`CLAUDE.md`**, or agent hubs → same commit as behavior when possible. Recurring mistakes → extend **`docs/`** or add a bullet under **Quick rule routing** / this file.
+
+## Section T (`.cursorrules`)
+
+Authoritative detail: `.cursor/rules/*.mdc`. MCP: `.cursor/mcp.json`. Hub: `CLAUDE.md`.
+
+## Skills (Claude — Section S)
+
+| Skill | Use |
+|-------|-----|
+| `bedrock-sage` | Bedrock layout, root Composer, theme cwd, Acorn, setup/post-deploy |
+| `sage-frontend` | Vite, Tailwind tokens, `app.ts`, Alpine paths, a11y |
+| `acf-flexible` | JSON-first ACF, flexible.php, composers, tests |
+| `acf-blocks` | block.php, `blocks.*` views, `Composers/Blocks`, underscore slugs, `tests/Blocks` |
+| `deploy-scripts` | CI `THEME_DIR`, lockfiles, `npm ci`, view cache |
+| `wordpress-plugins` | Plugin scaffold, templates, strict TS/PHP |
+| `acorn-laravel` | DI, `config()`, Blade component primitives; Sage-safe subset of Laravel |
+| `tailwindcss-development` | Tailwind v4, `@theme`, layout/utilities in Blade |
+| `testing-php-vitest` | PHPUnit (theme + plugins), Vitest for `resources/ts`, commands, integration vs default suite |
+| `prettier-tailwind` | Prettier + Tailwind class sort; Blade/PHP excluded; Pint for PHP |
+| `linting-php-eslint` | Theme Pint + ESLint commands, `eslint.config.js`, CI/root gates |
+| `shadpine-ui` | Shadpine UI widgets: primitive + styled Blade, Alpine TS, Vitest, `config/classes` |
