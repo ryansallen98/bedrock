@@ -1,14 +1,17 @@
 <div
     data-slot="{{ $dataSlot }}"
+    data-shadpine-hydrate="calendar"
     data-mode="{{ $modeKey }}"
     @if ($nMonths > 1) data-multiple-months="true" @endif
     x-data="calendar(@js($calConfig))"
+    x-bind:data-js-hydrated="ready ? 'true' : null"
     class="{{ $tw->merge($rootClass, $attributes->get('class') ?? '') }}"
     x-on:keydown="onGridKeydown($event)"
     x-on:focusin="onGridFocusin($event)"
     {{ $attributes->except('class') }}
 >
-  <div class="{{ $c['months'] }}">
+  @include('components.calendar.preload', ['c' => $c, 'nMonths' => $nMonths, 'captionLayoutKey' => $captionLayoutKey])
+  <div class="shadpine-js-live {{ $c['months'] }}">
       {{-- Nav spans full multi-month width (shadcn / RDP: sibling of .rdp-month, not inside first month). --}}
       <span class="sr-only absolute top-0 left-0 -m-px h-px w-px overflow-hidden border-0 p-0 whitespace-nowrap" aria-live="polite" x-text="monthLabel"></span>
       <nav class="{{ $c['nav'] }}" aria-label="{{ esc_attr__('Calendar month navigation', 'sage') }}">
@@ -146,4 +149,5 @@
         </div>
       </template>
   </div>
+  {{-- /.shadpine-js-live --}}
 </div>

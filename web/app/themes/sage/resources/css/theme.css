@@ -135,6 +135,19 @@
   display: none;
 }
 
+/**
+ * Shadpine JS hydration: hide Alpine-driven UI until the root sets data-js-hydrated="true".
+ * Use on any widget with data-shadpine-hydrate="{name}" + x-bind:data-js-hydrated="ready ? 'true' : null".
+ * Layers: .shadpine-js-preload (static HTML) + .shadpine-js-live (x-show / x-for). See docs/components/js-preload.md.
+ */
+[data-shadpine-hydrate]:not([data-js-hydrated='true']) .shadpine-js-live {
+  display: none !important;
+}
+
+[data-shadpine-hydrate][data-js-hydrated='true'] .shadpine-js-preload {
+  display: none !important;
+}
+
 ::selection {
   background-color: var(--primary);
   color: var(--primary-foreground);

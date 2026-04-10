@@ -35,6 +35,7 @@
 | Button | [Button](https://ui.shadcn.com/docs/components/button) | [button.md](button.md) |
 | Button group | [Button group](https://ui.shadcn.com/docs/components/radix/button-group) | [button-group.md](button-group.md) |
 | Calendar | [Calendar](https://ui.shadcn.com/docs/components/radix/calendar) | [calendar.md](calendar.md) |
+| JS preload (hydration) | — | [js-preload.md](js-preload.md) |
 | Native select | [Native Select](https://ui.shadcn.com/docs/components/native-select) | [native-select.md](native-select.md) |
 | Skeleton | [Skeleton](https://ui.shadcn.com/docs/components/skeleton) | [skeleton.md](skeleton.md) |
 

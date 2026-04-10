@@ -8,6 +8,8 @@
 
 **Markup:** Month and year **`<option>`** elements are **server-rendered in Blade** (valid HTML, works in every browser). Alpine only binds **`x-bind:disabled`** on month options and **`x-bind:value`** on the **`<select>`**s — do not use Alpine **`x-for`** on **`<option>`** (it often fails to expand).
 
+**JS preload:** Until Alpine runs, **`x-for`** / **`x-text`** do not fill the grid. The root includes **`components/calendar/preload.blade.php`** (**`x-skeleton`** placeholders for nav arrows, caption selects or label bar, weekday row, and six week rows) and **`data-shadpine-hydrate="calendar"`** + **`x-bind:data-js-hydrated="ready ? 'true' : null"`**. **`calendar.ts`** sets **`ready`** after the first **`refresh()`** (and after async **`loadCalendarLocale`** when **`locale`** is not default). **`theme.css`** toggles **`.shadpine-js-preload`** / **`.shadpine-js-live`** visibility. Reusable pattern: **[`js-preload.md`](js-preload.md)**.
+
 **Toolbar:** Matches **React DayPicker / shadcn** layout: **`nav`** is a **direct child of the months container** (not inside the first month column) so **`absolute inset-x-0 top-0`** + **`justify-between`** place prev/next on the **far left and far right of the full multi-month strip**. **`pointer-events-none`** on the bar and **`pointer-events-auto`** on the buttons keeps the **center** usable for caption **`<select>`**s (single-month dropdown mode). The caption row (**`month_caption`**) stays in normal flow on the **first month** panel only, **centered**, with **`px-(--cell-size)`** (tighter **`px-1`** on small screens). **Tab order:** prev → next → month → year when dropdown caption is shown (**DOM** order matches that).
 
 ## Files
@@ -15,6 +17,7 @@
 | Role | Path |
 |------|------|
 | Root (`data-slot="calendar"`) | `resources/views/components/calendar/index.blade.php` |
+| Preload skeleton (static) | `resources/views/components/calendar/preload.blade.php` |
 | Blade class component + view data | `app/View/Components/Calendar/Calendar.php`, `app/View/Components/Calendar/ViewState.php` |
 | Grid + selection logic | `resources/ts/components/calendar/calendar.ts` (+ **`index.ts`** barrel) |
 | Pure month grid (tests) | `resources/ts/components/calendar/calendar_grid.ts` |
@@ -29,12 +32,14 @@
 Copy these paths together; keep **`App\`** PSR-4 → **`app/`** (or adjust namespace + Composer autoload in the target project):
 
 - `resources/views/components/calendar/index.blade.php`
+- `resources/views/components/calendar/preload.blade.php`
 - `app/View/Components/Calendar/Calendar.php`
 - `app/View/Components/Calendar/ViewState.php`
 - `app/View/Components/Calendar/CalendarBounds.php`
 - `resources/ts/components/calendar/**` (including **`index.ts`** barrel)
 - `config/components/calendar.php` — ensure Tailwind scans **`../../config/`** (this theme’s **`app.css`** **`@source`**); **`Calendar::render()`** flattens **`root` + `layout`** via **`ViewState::flattenCalendarTokenMap()`**
 - Register **`Alpine.data('calendar', calendar)`** in your entry (e.g. **`app.ts`**) and depend on **`date-fns`**
+- **`theme.css`** (or equivalent): Shadpine **JS hydration** rules for **`[data-shadpine-hydrate]`** + **`.shadpine-js-preload`** / **`.shadpine-js-live`**; **`x-skeleton`** for preload
 - Optional: PHPUnit **`tests/View/Components/Calendar/CalendarBoundsTest.php`**, **`ViewStateTest.php`** if you keep the same namespace
 
 Also pull **`x-native-select`**, **`x-button`**, **`x-button.icon`**, and **`x-lucide-*`** (or replace in the Blade partial) if the target project does not already ship them.

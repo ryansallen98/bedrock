@@ -307,6 +307,8 @@ export interface CalendarAlpineState {
   themeClasses: CalendarThemeClasses;
   /** Roving tabindex target (ISO day); one day button uses tabindex 0. */
   focusedIso: string | null;
+  /** False until first grid refresh (and async locale load if any) completes; drives data-js-hydrated on the root. */
+  ready: boolean;
   init(): void;
   refresh(): void;
   reconcileFocus(opts?: { preferDayOfMonth?: number }): void;
@@ -404,8 +406,20 @@ export function calendar(opts: CalendarAlpineOpts = {}): CalendarAlpineState {
     modifierClassByKey,
     themeClasses,
     focusedIso: null as string | null,
+    ready: false,
 
     init() {
+      const self = this as Partial<CalendarComponentThis>;
+      const markReady = () => {
+        if (typeof self.$nextTick === 'function') {
+          self.$nextTick(() => {
+            this.ready = true;
+          });
+        } else {
+          this.ready = true;
+        }
+      };
+
       this.refresh();
       this.reconcileFocus();
       if (this.localeId !== CALENDAR_DEFAULT_LOCALE_ID) {
@@ -413,7 +427,10 @@ export function calendar(opts: CalendarAlpineOpts = {}): CalendarAlpineState {
           this.dfLocale = loc;
           this.refresh();
           this.reconcileFocus();
+          markReady();
         });
+      } else {
+        markReady();
       }
     },
 

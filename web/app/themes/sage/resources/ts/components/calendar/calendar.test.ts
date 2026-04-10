@@ -32,6 +32,7 @@ describe('calendar Alpine factory', () => {
       themeClasses: emptyTheme,
     });
     c.init();
+    expect(c.ready).toBe(true);
     expect(c.weeks.length).toBeGreaterThan(0);
     expect(c.selectedSingle).not.toBeNull();
     expect(c.monthLabel).toContain('2026');
@@ -174,6 +175,7 @@ describe('calendar Alpine factory', () => {
       { timeout: 5000 }
     );
     expect(c.monthLabel.toLowerCase()).toContain('avril');
+    expect(c.ready).toBe(true);
   });
 });
 

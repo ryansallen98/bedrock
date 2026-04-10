@@ -1,3 +1,7 @@
+## 1.0.73 — 2026-04-08
+
+- **Calendar + Shadpine:** **FOUC** guard — **`preload.blade.php`** (**`x-skeleton`** for nav, caption, weekdays, day grid) until Alpine sets **`ready`** → **`data-js-hydrated="true"`**; **`calendar.ts`** **`markReady()`** after sync **`refresh()`** and after async locale load. Generic **`.shadpine-js-preload`** / **`.shadpine-js-live`** + **`data-shadpine-hydrate`** CSS in **`theme.css`**. **`docs/components/js-preload.md`** + catalog row; **`calendar.md`** updated.
+
 ## 1.0.72 — 2026-04-08
 
 - **Native select:** **`index.blade.php`** — **`<select>`** uses **`$tw->merge($selectClasses, $attributes->get('class') ?? '')`** and **`$attributes->except('class')`** instead of **`class="{{ $selectClasses }}"` + raw **`{{ $attributes }}`**, matching other kit class components. **`docs/components/native-select.md`** (forwarding + Modifying).
