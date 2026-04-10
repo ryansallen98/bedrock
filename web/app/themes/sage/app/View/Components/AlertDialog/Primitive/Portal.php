@@ -11,16 +11,16 @@ class Portal extends ShadpineComponent
 {
     public function __construct(
         public string $dataSlot = 'alert-dialog-portal',
-        /** Empty uses `components.alert_dialog.default_duration_segment`. */
+        /** Empty uses `components.alert_dialog.meta.default_duration_segment`. */
         public string $enterDuration = '',
         public string $leaveDuration = '',
     ) {}
 
     public function render(): ViewContract
     {
-        /** @var array{default_duration_segment: string} $c */
+        /** @var array{meta: array{default_duration_segment: string}} $c */
         $c = config('components.alert_dialog');
-        $def = $c['default_duration_segment'];
+        $def = $c['meta']['default_duration_segment'];
         $enter = $this->enterDuration !== '' ? $this->enterDuration : $def;
         $leave = $this->leaveDuration !== '' ? $this->leaveDuration : $def;
 

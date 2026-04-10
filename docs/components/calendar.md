@@ -21,7 +21,7 @@
 | **date-fns** locale whitelist + dynamic import | `resources/ts/components/calendar/calendar_locales.ts` |
 | Modifier / disabled parsing (ISO lists) | `resources/ts/components/calendar/calendar_modifiers.ts` |
 | **Today** in an IANA zone (`Intl`) | `resources/ts/components/calendar/calendar_timezone.ts` |
-| Class tokens | `config/components/calendar.php` → **`config('components.calendar')`** |
+| Class tokens | `config/components/calendar.php` → **`config('components.calendar')`** — **`root`** (shell) + **`layout`** (grid/caption/day keys); merged flat in **`ViewState::flattenCalendarTokenMap()`** for Blade **`$c`** |
 | Min/max shortcuts (PHP) | `app/View/Components/Calendar/CalendarBounds.php` — **`mergeMinMaxWithOptions()`** (PHPUnit: **`tests/View/Components/Calendar/CalendarBoundsTest.php`**) |
 
 ### Portable bundle (other projects)
@@ -33,7 +33,7 @@ Copy these paths together; keep **`App\`** PSR-4 → **`app/`** (or adjust names
 - `app/View/Components/Calendar/ViewState.php`
 - `app/View/Components/Calendar/CalendarBounds.php`
 - `resources/ts/components/calendar/**` (including **`index.ts`** barrel)
-- `config/components/calendar.php` — ensure Tailwind scans **`../../config/`** (this theme’s **`app.css`** **`@source`**)
+- `config/components/calendar.php` — ensure Tailwind scans **`../../config/`** (this theme’s **`app.css`** **`@source`**); **`Calendar::render()`** flattens **`root` + `layout`** via **`ViewState::flattenCalendarTokenMap()`**
 - Register **`Alpine.data('calendar', calendar)`** in your entry (e.g. **`app.ts`**) and depend on **`date-fns`**
 - Optional: PHPUnit **`tests/View/Components/Calendar/CalendarBoundsTest.php`**, **`ViewStateTest.php`** if you keep the same namespace
 

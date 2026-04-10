@@ -23,10 +23,10 @@ class Breadcrumb extends ShadpineComponent
 
         $label = $this->ariaLabel ?? __('Breadcrumbs', 'sage');
 
-        /** @var array{list: string} $c */
+        /** @var array{root: array{list: string}} $c */
         $c = config('components.breadcrumb');
         $listClasses = $tw->merge(
-            $c['list'],
+            $c['root']['list'],
             $this->attributes->get('class'),
         );
 

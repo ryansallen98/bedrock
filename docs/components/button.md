@@ -10,7 +10,7 @@ Buttons are **presentational** (no `primitive/`): polymorphic tag via `as`.
 |------|------|
 | Default button | `resources/views/components/button/index.blade.php` |
 | Icon / square sizes | `resources/views/components/button/icon.blade.php` |
-| Class tokens | `config/components/button.php` → `config('components.button')` |
+| Class tokens | `config/components/button.php` → `config('components.button')` (`root.base` / `variants` / `sizes`; **`icon.sizes`** for **`x-button.icon`**) |
 
 ## Usage (Blade)
 
@@ -24,11 +24,11 @@ Buttons are **presentational** (no `primitive/`): polymorphic tag via `as`.
 
 - **`as`:** `button` (default), `a`, `span`, `div` — only `button` / `a` are inherently keyboard-accessible; use native elements for real actions.
 - **`variant`:** `default`, `outline`, `secondary`, `ghost`, `destructive`, `link`.
-- **`size`:** `default`, `xs`, `sm`, `lg`, `xl`, `2xl` (icon sizes differ for `button.icon` — see `icon_sizes` in config).
+- **`size`:** `default`, `xs`, `sm`, `lg`, `xl`, `2xl` (icon sizes differ for `button.icon` — see **`icon.sizes`** in config).
 
 ## Modifying
 
-- **Variants / sizes:** edit `config/components/button.php` (primary place for CVA-style strings).
+- **Variants / sizes:** edit `config/components/button.php` under **`root`** (and **`icon.sizes`** for **`x-button.icon`**).
 - **Wrapper markup:** edit `index.blade.php` / `icon.blade.php`; keep `$tw->merge` order: base → variant → size → `$attributes->get('class')`.
 
 ## Exporting

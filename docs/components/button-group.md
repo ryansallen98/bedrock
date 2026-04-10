@@ -51,7 +51,7 @@ Class strings mirror the **new-york-v4** registry ([`button-group.json`](https:/
 
 ## Modifying
 
-- **Layout / tokens:** **`config/components/button_group.php`** — `group` (base + `orientation`), `text`, `separator` (`radix` + `group` layers like upstream **`cn()`**).
+- **Layout / tokens:** **`config/components/button_group.php`** — **`root`** (base + `orientation`), **`text`**, **`separator`** (`radix` + `group` layers like upstream **`cn()`**).
 - **Per-instance overrides:** pass **`class`** on any subcomponent; **`$tw->merge`** applies.
 
 ## Exporting

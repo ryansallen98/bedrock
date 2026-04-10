@@ -20,15 +20,15 @@ class ButtonGroup extends ShadpineComponent
         /** @var TailwindMerge $tw */
         $tw = app('tw');
 
-        /** @var array{group: array{base: string, orientation: array<string, string>}} $c */
+        /** @var array{root: array{base: string, orientation: array<string, string>}} $c */
         $c = config('components.button_group');
         $orientationKey = in_array($this->orientation, ['horizontal', 'vertical'], true)
             ? $this->orientation
             : 'horizontal';
 
         $classes = $tw->merge(
-            $c['group']['base'],
-            $c['group']['orientation'][$orientationKey],
+            $c['root']['base'],
+            $c['root']['orientation'][$orientationKey],
             $this->attributes->get('class'),
         );
 

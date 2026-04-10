@@ -48,7 +48,7 @@ class Calendar extends ShadpineComponent
         $tw = app('tw');
 
         /** @var array<string, string> $calendarClasses */
-        $calendarClasses = config('components.calendar');
+        $calendarClasses = ViewState::flattenCalendarTokenMap(config('components.calendar'));
 
         $defaultLocale = str_replace('_', '-', app()->getLocale());
 

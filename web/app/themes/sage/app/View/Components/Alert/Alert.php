@@ -21,12 +21,13 @@ class Alert extends ShadpineComponent
         /** @var TailwindMerge $tw */
         $tw = app('tw');
 
-        /** @var array{base: string, variants: array<string, string>} $config */
+        /** @var array{root: array{base: string, variants: array<string, string>}, title: string, description: string, action: string} $config */
         $config = config('components.alert');
+        $root = $config['root'];
 
         $classes = $tw->merge(
-            $config['base'],
-            $config['variants'][$this->variant] ?? $config['variants']['default'],
+            $root['base'],
+            $root['variants'][$this->variant] ?? $root['variants']['default'],
             $this->attributes->get('class'),
         );
 

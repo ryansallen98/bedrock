@@ -13,6 +13,17 @@ use TailwindMerge\TailwindMerge;
 final class ViewState
 {
     /**
+     * Merge `config('components.calendar')` into the flat class map used by Blade (`$c`) and this helper.
+     *
+     * @param  array{root: string, layout: array<string, string>}  $config
+     * @return array<string, string>
+     */
+    public static function flattenCalendarTokenMap(array $config): array
+    {
+        return array_merge(['root' => $config['root']], $config['layout']);
+    }
+
+    /**
      * @param  array<int|string, mixed>  $disabled
      * @param  array<string, mixed>  $modifiers
      * @param  array<string, mixed>  $modifiersClassNames

@@ -1,3 +1,11 @@
+## 1.0.67 — 2026-04-08
+
+- **Config (Shadpine parity):** Normalized **`config/components/*.php`** so root-only tokens sit under **`root`** (and **`icon`**, **`layout`**, **`meta`** where needed): **`button`** (**`root`** + **`icon.sizes`**), **`button_group`** (**`root`** replaces **`group`**), **`breadcrumb`** (**`root.list`**), **`native_select`** (**`root`** wrapper/select/icon), **`calendar`** (**`root`** + **`layout`** → **`ViewState::flattenCalendarTokenMap()`**), **`alert_dialog`** (**`meta.default_duration_segment`**). PHP consumers, **`ViewStateTest`**, **`docs/components/*`**.
+
+## 1.0.66 — 2026-04-08
+
+- **Config:** **`components.badge`** and **`components.alert`** — nest **`base`** + **`variants`** under **`root`** (root-only CVA); alert **`title`** / **`description`** / **`action`** stay at top level for subcomponents. **`Badge`**, **`Alert`** PHP + **`docs/components/badge.md`**, **`alert.md`**.
+
 ## 1.0.65 — 2026-04-08
 
 - **Shadpine UI:** **`App\View\Components\Support\ShadpineComponent`** — all kit class components extend it so **`data()`** runs before **`resolveView()`** / **`render()`**, matching Laravel’s own **`BladeCompiler::renderComponent`** order and fixing **`$this->attributes` null** after **`view:clear`** (and avoiding stale compiled views pointing at removed **`App\View\Components\{Name}`** classes). Rule **`09`**.

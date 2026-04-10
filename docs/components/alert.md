@@ -10,7 +10,7 @@ Alerts here are **presentational** (no `primitive/` subtree): static layout and 
 |------|------|
 | Root | `resources/views/components/alert/index.blade.php` |
 | Title / description / action | `title.blade.php`, `description.blade.php`, `action.blade.php` |
-| Class tokens | `config/components/alert.php` → `config('components.alert')` |
+| Class tokens | `config/components/alert.php` → `config('components.alert')` (`root.base` / `root.variants` for **`x-alert`**; **`title`**, **`description`**, **`action`** for sub-parts) |
 
 ## Usage (Blade)
 
@@ -29,7 +29,7 @@ Alerts here are **presentational** (no `primitive/` subtree): static layout and 
 
 ## Modifying
 
-- **Colors / layout / grid:** edit `config/components/alert.php` and optionally slot components; merge with `$tw` in each Blade file.
+- **Colors / layout / grid:** edit `config/components/alert.php` (**`root`** for the alert shell; **`title`** / **`description`** / **`action`** for slot classes); merge with `$tw` in each PHP `render()`.
 - **Semantics:** prefer a real heading for the title when the outline matters: `<x-alert.title as="h2">`.
 
 ## Exporting

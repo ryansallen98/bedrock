@@ -1,10 +1,12 @@
 <?php
 
 /**
- * Shadpine breadcrumb — list + item parts.
+ * Shadpine breadcrumb — root list + item parts.
  */
 return [
-    'list' => 'm-0 flex list-none flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground',
+    'root' => [
+        'list' => 'm-0 flex list-none flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground',
+    ],
     'item' => 'inline-flex items-center gap-1.5',
     'link' => 'text-muted-foreground no-underline! transition-colors hover:text-foreground',
     'page' => 'font-normal text-foreground',

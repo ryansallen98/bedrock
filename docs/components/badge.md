@@ -9,7 +9,7 @@ Badges are **presentational** (no `primitive/` subtree): small labels for status
 | Role | Path |
 |------|------|
 | Default badge | `resources/views/components/badge/index.blade.php` |
-| Class tokens | `config/components/badge.php` → `config('components.badge')` |
+| Class tokens | `config/components/badge.php` → `config('components.badge')` (`root.base`, `root.variants`) |
 
 ## Usage (Blade)
 
@@ -33,7 +33,7 @@ Badges are **presentational** (no `primitive/` subtree): small labels for status
 
 ## Modifying
 
-- **Variants:** edit `config/components/badge.php` (CVA-style strings).
+- **Variants:** edit `config/components/badge.php` under **`root`** (CVA-style **`base`** + **`variants`**).
 - **Markup:** edit `index.blade.php`; keep `$tw->merge` order: **base → variant →** `$attributes->get('class')`.
 
 ## Exporting

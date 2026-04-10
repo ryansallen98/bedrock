@@ -2,7 +2,7 @@
 
 **Inspired by shadcn/ui:** [Native Select](https://ui.shadcn.com/docs/components/native-select)
 
-Styled **`<select>`** with a chevron affordance. Prefer this over the Radix-style custom **Select** when you want **native** behavior, **mobile** pickers, or minimal JS. No Alpine factory — class tokens live in **`config/components/native_select.php`**; **`App\View\Components\NativeSelect*`** merge and pass **`$wrapperClasses`** / **`$selectClasses`** / etc. into markup-only Blade.
+Styled **`<select>`** with a chevron affordance. Prefer this over the Radix-style custom **Select** when you want **native** behavior, **mobile** pickers, or minimal JS. No Alpine factory — class tokens live in **`config/components/native_select.php`** (**`root.wrapper` / `select` / `icon`** for **`x-native-select`**; **`optgroup`** / **`option`** for sub-parts); **`App\View\Components\NativeSelect*`** merge and pass **`$wrapperClasses`** / **`$selectClasses`** / etc. into markup-only Blade.
 
 ## Files
 

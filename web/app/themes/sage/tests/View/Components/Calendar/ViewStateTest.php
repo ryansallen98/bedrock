@@ -23,8 +23,10 @@ final class ViewStateTest extends TestCase
     private static function calendarClasses(): array
     {
         $path = dirname(__DIR__, 4).'/config/components/calendar.php';
+        /** @var array{root: string, layout: array<string, string>} $config */
+        $config = require $path;
 
-        return require $path;
+        return ViewState::flattenCalendarTokenMap($config);
     }
 
     public function test_caption_years_use_effective_min_when_disable_past_and_no_explicit_min(): void

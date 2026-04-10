@@ -13,7 +13,7 @@ class Content extends ShadpineComponent
     public function __construct(
         public string $size = 'default',
         public string $dataSlot = 'alert-dialog-content',
-        /** Tailwind duration segment; empty uses `components.alert_dialog.default_duration_segment`. */
+        /** Tailwind duration segment; empty uses `components.alert_dialog.meta.default_duration_segment`. */
         public string $duration = '',
     ) {}
 
@@ -22,9 +22,9 @@ class Content extends ShadpineComponent
         /** @var TailwindMerge $tw */
         $tw = app('tw');
 
-        /** @var array{default_duration_segment: string, overlay: string, panel: string} $c */
+        /** @var array{meta: array{default_duration_segment: string}, overlay: string, panel: string} $c */
         $c = config('components.alert_dialog');
-        $segment = $this->duration !== '' ? $this->duration : $c['default_duration_segment'];
+        $segment = $this->duration !== '' ? $this->duration : $c['meta']['default_duration_segment'];
 
         $overlayClasses = $tw->merge(
             str_replace('{duration}', $segment, $c['overlay'])

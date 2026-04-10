@@ -6,7 +6,9 @@
  * Use `{duration}` placeholder for Tailwind duration utilities (e.g. duration-100).
  */
 return [
-    'default_duration_segment' => 'duration-100',
+    'meta' => [
+        'default_duration_segment' => 'duration-100',
+    ],
 
     'root' => 'contents',
 

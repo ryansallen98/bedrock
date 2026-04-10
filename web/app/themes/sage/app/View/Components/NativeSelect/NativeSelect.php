@@ -25,12 +25,13 @@ class NativeSelect extends ShadpineComponent
         /** @var TailwindMerge $tw */
         $tw = app('tw');
 
-        /** @var array{wrapper: string, select: string, icon: string} $c */
+        /** @var array{root: array{wrapper: string, select: string, icon: string}} $c */
         $c = config('components.native_select');
+        $root = $c['root'];
 
-        $wrapperClasses = $tw->merge($c['wrapper'], $this->class);
-        $selectClasses = $tw->merge($c['select'], $this->selectClass);
-        $iconClasses = $tw->merge($c['icon'], $this->iconClass);
+        $wrapperClasses = $tw->merge($root['wrapper'], $this->class);
+        $selectClasses = $tw->merge($root['select'], $this->selectClass);
+        $iconClasses = $tw->merge($root['icon'], $this->iconClass);
 
         return view('components.native-select.index', array_merge($this->data(), [
             'wrapperClasses' => $wrapperClasses,

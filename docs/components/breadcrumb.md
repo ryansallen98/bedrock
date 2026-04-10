@@ -10,6 +10,7 @@
 
 | Role | Path |
 |------|------|
+| Class tokens | `config/components/breadcrumb.php` → **`config('components.breadcrumb')`** (**`root.list`** for **`x-breadcrumb`**; **`item`**, **`link`**, **`page`**, **`separator`**, **`ellipsis`** for sub-parts) |
 | Root + list | `resources/views/components/breadcrumb/index.blade.php` |
 | List item | `item.blade.php` |
 | Segment link | `link.blade.php` |
@@ -51,7 +52,7 @@ Use **`href`** with **`home_url()`**, **`get_permalink()`**, or **`App\Support\W
 
 ## Modifying
 
-- **Tokens:** edit class strings in each partial; keep **`$tw->merge(..., $attributes->get('class'))`** order.
+- **Tokens:** edit **`config/components/breadcrumb.php`** and/or class strings in partials; keep **`$tw->merge(..., $attributes->get('class'))`** order in PHP **`render()`** methods.
 - **Separator icon:** change the default in **`separator.blade.php`** or override per usage with a slot.
 
 ## Exporting
