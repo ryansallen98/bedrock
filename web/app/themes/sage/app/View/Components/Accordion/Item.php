@@ -19,8 +19,10 @@ class Item extends Component
     {
         /** @var TailwindMerge $tw */
         $tw = app('tw');
-        $base = 'not-last:border-b';
-        $classes = $tw->merge($base, $this->attributes->get('class'));
+
+        /** @var array{item: string} $c */
+        $c = config('classes.accordion');
+        $classes = $tw->merge($c['item'], $this->attributes->get('class'));
 
         return view('components.accordion.item', array_merge($this->data(), [
             'classes' => $classes,

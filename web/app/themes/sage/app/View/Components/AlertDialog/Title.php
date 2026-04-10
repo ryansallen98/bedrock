@@ -19,8 +19,10 @@ class Title extends Component
     {
         /** @var TailwindMerge $tw */
         $tw = app('tw');
+        /** @var array{title: string} $c */
+        $c = config('classes.alert_dialog');
         $classes = $tw->merge(
-            'cn-font-heading text-base font-medium sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2',
+            $c['title'],
             $this->attributes->get('class'),
         );
 

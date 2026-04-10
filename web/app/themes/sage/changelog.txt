@@ -1,3 +1,11 @@
+## 1.0.62 — 2026-04-08
+
+- **Config:** **`classes.accordion`** — drop redundant **`styled`** parent; flat keys **`root`**, **`trigger`**, **`content`**, **`item`**. **`classes.alert_dialog.styled_root`** → **`root`**.
+
+## 1.0.61 — 2026-04-08
+
+- **Shadpine UI:** **No Tailwind utility strings** in **`app/View/Components/**/*.php`** — tokens moved to **`config/classes/`** (**`accordion`**, **`aspect_ratio`**, **`breadcrumb`**, **`native_select`**, **`alert_dialog`**, extended **`alert`**). Duration slots use **`{duration}`** + **`default_duration_segment`**. Rules **`09`**, **`14`**, **`shadpine-ui`** skill.
+
 ## 1.0.60 — 2026-04-08
 
 - **Shadpine UI:** All **`resources/views/components/**/*.blade.php`** are **markup-only** (no **`@props`** / **`@php`**). Props, **`config('classes.*')`**, and **`$tw->merge`** live in **`app/View/Components/*`** (nested classes for **`x-{name}.{sub}`**, helpers under **`View/Components/{Name}/`**, **`Support/`** for tiny cross-widget utilities). Rules **`09`**, **`05`**, **`14`** + **`shadpine-ui`** skill updated; **`AspectRatio/Dimensions`** PHPUnit.

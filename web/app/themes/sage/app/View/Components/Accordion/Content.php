@@ -18,8 +18,10 @@ class Content extends Component
     {
         /** @var TailwindMerge $tw */
         $tw = app('tw');
-        $base = 'grid overflow-hidden text-sm transition-[grid-template-rows] duration-200 ease-out motion-reduce:duration-0 data-[state=closed]:grid-rows-[0fr] data-[state=open]:grid-rows-[1fr]';
-        $classes = $tw->merge($base, $this->attributes->get('class'));
+
+        /** @var array{content: string} $c */
+        $c = config('classes.accordion');
+        $classes = $tw->merge($c['content'], $this->attributes->get('class'));
 
         return view('components.accordion.content', array_merge($this->data(), [
             'classes' => $classes,

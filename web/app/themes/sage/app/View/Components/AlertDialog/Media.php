@@ -18,8 +18,10 @@ class Media extends Component
     {
         /** @var TailwindMerge $tw */
         $tw = app('tw');
+        /** @var array{media: string} $c */
+        $c = config('classes.alert_dialog');
         $classes = $tw->merge(
-            "mb-2 inline-flex size-10 items-center justify-center rounded-md bg-muted sm:group-data-[size=default]/alert-dialog-content:row-span-2 *:[svg:not([class*='size-'])]:size-6",
+            $c['media'],
             $this->attributes->get('class'),
         );
 

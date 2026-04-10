@@ -20,8 +20,10 @@ class Group extends Component
     {
         /** @var TailwindMerge $tw */
         $tw = app('tw');
-        $optgroupBase = 'bg-[Canvas] text-[CanvasText]';
-        $groupClasses = $tw->merge($optgroupBase, $this->attributes->get('class'));
+
+        /** @var array{optgroup: string} $c */
+        $c = config('classes.native_select');
+        $groupClasses = $tw->merge($c['optgroup'], $this->attributes->get('class'));
 
         return view('components.native-select.group', array_merge($this->data(), [
             'groupClasses' => $groupClasses,

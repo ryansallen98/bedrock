@@ -19,7 +19,9 @@ class AlertDialog extends Component
         /** @var TailwindMerge $tw */
         $tw = app('tw');
 
-        $classes = $tw->merge('contents', $this->attributes->get('class'));
+        /** @var array{root: string} $c */
+        $c = config('classes.alert_dialog');
+        $classes = $tw->merge($c['root'], $this->attributes->get('class'));
         $defaultOpen = $this->attributes->boolean('default-open') || $this->attributes->boolean('defaultOpen');
 
         return view('components.alert-dialog.index', array_merge($this->data(), [

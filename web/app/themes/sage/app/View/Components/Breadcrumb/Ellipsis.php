@@ -18,8 +18,10 @@ class Ellipsis extends Component
     {
         /** @var TailwindMerge $tw */
         $tw = app('tw');
+        /** @var array{ellipsis: string} $c */
+        $c = config('classes.breadcrumb');
         $classes = $tw->merge(
-            'flex size-9 items-center justify-center [&>svg]:size-4',
+            $c['ellipsis'],
             $this->attributes->get('class'),
         );
 

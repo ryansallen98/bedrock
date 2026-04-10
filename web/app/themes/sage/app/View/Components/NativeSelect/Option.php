@@ -19,8 +19,10 @@ class Option extends Component
     {
         /** @var TailwindMerge $tw */
         $tw = app('tw');
-        $optionBase = 'bg-[Canvas] text-[CanvasText]';
-        $optionClasses = $tw->merge($optionBase, $this->attributes->get('class'));
+
+        /** @var array{option: string} $c */
+        $c = config('classes.native_select');
+        $optionClasses = $tw->merge($c['option'], $this->attributes->get('class'));
 
         return view('components.native-select.option', array_merge($this->data(), [
             'optionClasses' => $optionClasses,

@@ -19,8 +19,10 @@ class Link extends Component
     {
         /** @var TailwindMerge $tw */
         $tw = app('tw');
+        /** @var array{link: string} $c */
+        $c = config('classes.breadcrumb');
         $classes = $tw->merge(
-            'text-muted-foreground no-underline! transition-colors hover:text-foreground',
+            $c['link'],
             $this->attributes->get('class'),
         );
 

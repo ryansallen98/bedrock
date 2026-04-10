@@ -19,8 +19,10 @@ class Action extends Component
         /** @var TailwindMerge $tw */
         $tw = app('tw');
 
+        /** @var array{action: string} $config */
+        $config = config('classes.alert');
         $classes = $tw->merge(
-            'absolute top-2 right-2',
+            $config['action'],
             $this->attributes->get('class'),
         );
 

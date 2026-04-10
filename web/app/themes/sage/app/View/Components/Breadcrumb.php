@@ -22,8 +22,11 @@ class Breadcrumb extends Component
         $tw = app('tw');
 
         $label = $this->ariaLabel ?? __('Breadcrumbs', 'sage');
+
+        /** @var array{list: string} $c */
+        $c = config('classes.breadcrumb');
         $listClasses = $tw->merge(
-            'm-0 flex list-none flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground',
+            $c['list'],
             $this->attributes->get('class'),
         );
 

@@ -6,4 +6,7 @@ return [
         'default' => 'bg-card text-card-foreground',
         'destructive' => 'bg-card text-destructive *:data-[slot=alert-description]:text-destructive/90 *:[svg]:text-current',
     ],
+    'title' => 'cn-font-heading font-medium group-has-[>svg]/alert:col-start-2 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground',
+    'description' => 'text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4',
+    'action' => 'absolute top-2 right-2',
 ];

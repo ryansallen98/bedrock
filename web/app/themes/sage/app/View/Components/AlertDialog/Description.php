@@ -19,8 +19,10 @@ class Description extends Component
     {
         /** @var TailwindMerge $tw */
         $tw = app('tw');
+        /** @var array{description: string} $c */
+        $c = config('classes.alert_dialog');
         $classes = $tw->merge(
-            'text-sm text-balance text-muted-foreground md:text-pretty *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground',
+            $c['description'],
             $this->attributes->get('class'),
         );
 

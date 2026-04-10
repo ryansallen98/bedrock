@@ -11,12 +11,22 @@ class Portal extends Component
 {
     public function __construct(
         public string $dataSlot = 'alert-dialog-portal',
-        public string $enterDuration = 'duration-100',
-        public string $leaveDuration = 'duration-100',
+        /** Empty uses `classes.alert_dialog.default_duration_segment`. */
+        public string $enterDuration = '',
+        public string $leaveDuration = '',
     ) {}
 
     public function render(): ViewContract
     {
-        return view('components.alert-dialog.primitive.portal', $this->data());
+        /** @var array{default_duration_segment: string} $c */
+        $c = config('classes.alert_dialog');
+        $def = $c['default_duration_segment'];
+        $enter = $this->enterDuration !== '' ? $this->enterDuration : $def;
+        $leave = $this->leaveDuration !== '' ? $this->leaveDuration : $def;
+
+        return view('components.alert-dialog.primitive.portal', array_merge($this->data(), [
+            'enterDuration' => $enter,
+            'leaveDuration' => $leave,
+        ]));
     }
 }

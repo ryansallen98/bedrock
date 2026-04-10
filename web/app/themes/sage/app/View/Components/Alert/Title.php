@@ -20,8 +20,10 @@ class Title extends Component
         /** @var TailwindMerge $tw */
         $tw = app('tw');
 
+        /** @var array{title: string} $config */
+        $config = config('classes.alert');
         $classes = $tw->merge(
-            'cn-font-heading font-medium group-has-[>svg]/alert:col-start-2 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground',
+            $config['title'],
             $this->attributes->get('class'),
         );
 

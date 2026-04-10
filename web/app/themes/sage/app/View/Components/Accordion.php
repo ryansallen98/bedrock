@@ -19,8 +19,10 @@ class Accordion extends Component
     {
         /** @var TailwindMerge $tw */
         $tw = app('tw');
-        $base = 'flex w-full flex-col';
-        $classes = $tw->merge($base, $this->attributes->get('class'));
+
+        /** @var array{root: string} $c */
+        $c = config('classes.accordion');
+        $classes = $tw->merge($c['root'], $this->attributes->get('class'));
 
         return view('components.accordion.index', array_merge($this->data(), [
             'classes' => $classes,

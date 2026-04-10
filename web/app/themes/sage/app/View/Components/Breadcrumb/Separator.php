@@ -18,7 +18,9 @@ class Separator extends Component
     {
         /** @var TailwindMerge $tw */
         $tw = app('tw');
-        $classes = $tw->merge('[&>svg]:size-3.5', $this->attributes->get('class'));
+        /** @var array{separator: string} $c */
+        $c = config('classes.breadcrumb');
+        $classes = $tw->merge($c['separator'], $this->attributes->get('class'));
 
         return view('components.breadcrumb.separator', array_merge($this->data(), [
             'classes' => $classes,

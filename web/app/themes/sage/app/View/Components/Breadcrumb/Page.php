@@ -18,7 +18,9 @@ class Page extends Component
     {
         /** @var TailwindMerge $tw */
         $tw = app('tw');
-        $classes = $tw->merge('font-normal text-foreground', $this->attributes->get('class'));
+        /** @var array{page: string} $c */
+        $c = config('classes.breadcrumb');
+        $classes = $tw->merge($c['page'], $this->attributes->get('class'));
 
         return view('components.breadcrumb.page', array_merge($this->data(), [
             'classes' => $classes,
