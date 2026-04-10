@@ -1,3 +1,7 @@
+## 1.0.64 — 2026-04-08
+
+- **Shadpine UI:** Root Blade class components moved from **`app/View/Components/{Name}.php`** into **`app/View/Components/{Name}/{Name}.php`** (namespace **`App\View\Components\{Name}`**) so each widget lives under one folder. **`x-{name}`** tags unchanged (Laravel **`ComponentTagCompiler`** nested class fallback). Rule **`09`**, **`docs/components/calendar.md`** portable paths.
+
 ## 1.0.63 — 2026-04-08
 
 - **Shadpine UI:** Renamed theme folder **`config/classes/`** → **`config/components/`**; **`config('classes.*')`** → **`config('components.*')`** (Acorn nested config keys **`components.{slug}`**). Rules **`07`**, **`09`**, **`14`**, **`shadpine-ui`** skill, **`docs/components/*`**, kit copy, and tests updated.

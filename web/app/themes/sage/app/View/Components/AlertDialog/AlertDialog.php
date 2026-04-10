@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components;
+namespace App\View\Components\AlertDialog;
 
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\View\Component;
 use TailwindMerge\TailwindMerge;
 
-class Accordion extends Component
+class AlertDialog extends Component
 {
     public function __construct(
-        public string $type = 'single',
-        public string $dataSlot = 'accordion',
+        public string $dataSlot = 'alert-dialog',
     ) {}
 
     public function render(): ViewContract
@@ -21,11 +20,13 @@ class Accordion extends Component
         $tw = app('tw');
 
         /** @var array{root: string} $c */
-        $c = config('components.accordion');
+        $c = config('components.alert_dialog');
         $classes = $tw->merge($c['root'], $this->attributes->get('class'));
+        $defaultOpen = $this->attributes->boolean('default-open') || $this->attributes->boolean('defaultOpen');
 
-        return view('components.accordion.index', array_merge($this->data(), [
+        return view('components.alert-dialog.index', array_merge($this->data(), [
             'classes' => $classes,
+            'defaultOpen' => $defaultOpen,
         ]));
     }
 }

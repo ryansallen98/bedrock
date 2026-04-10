@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components;
+namespace App\View\Components\AspectRatio;
 
-use App\View\Components\AspectRatio\Dimensions;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\View\Component;
 use TailwindMerge\TailwindMerge;

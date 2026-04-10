@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components;
+namespace App\View\Components\Badge;
 
 use App\View\Components\Support\AllowedTag;
 use Illuminate\Contracts\View\View as ViewContract;

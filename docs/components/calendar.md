@@ -15,7 +15,7 @@
 | Role | Path |
 |------|------|
 | Root (`data-slot="calendar"`) | `resources/views/components/calendar/index.blade.php` |
-| Blade class component + view data | `app/View/Components/Calendar.php`, `app/View/Components/Calendar/ViewState.php` |
+| Blade class component + view data | `app/View/Components/Calendar/Calendar.php`, `app/View/Components/Calendar/ViewState.php` |
 | Grid + selection logic | `resources/ts/components/calendar/calendar.ts` (+ **`index.ts`** barrel) |
 | Pure month grid (tests) | `resources/ts/components/calendar/calendar_grid.ts` |
 | **date-fns** locale whitelist + dynamic import | `resources/ts/components/calendar/calendar_locales.ts` |
@@ -29,7 +29,7 @@
 Copy these paths together; keep **`App\`** PSR-4 → **`app/`** (or adjust namespace + Composer autoload in the target project):
 
 - `resources/views/components/calendar/index.blade.php`
-- `app/View/Components/Calendar.php`
+- `app/View/Components/Calendar/Calendar.php`
 - `app/View/Components/Calendar/ViewState.php`
 - `app/View/Components/Calendar/CalendarBounds.php`
 - `resources/ts/components/calendar/**` (including **`index.ts`** barrel)

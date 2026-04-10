@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components;
+namespace App\View\Components\Button;
 
-use App\View\Components\Button\ButtonClasses;
 use App\View\Components\Support\AllowedTag;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\View\Component;
