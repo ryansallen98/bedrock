@@ -2,7 +2,7 @@
     data-slot="{{ $dataSlot }}"
     data-variant="{{ $variant }}"
     data-size="{{ $size }}"
-    class="{{ $classes }}"
+    class="{{ $tw->merge($classes, $attributes->get('class') ?? '') }}"
     {{ $attributes->except('class') }}
 >
   {{ $slot }}

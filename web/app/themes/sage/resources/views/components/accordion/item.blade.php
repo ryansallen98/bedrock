@@ -1,7 +1,7 @@
 <x-accordion.primitive.item
     :open="$open"
     {{ $attributes->except('class') }}
-    class="{{ $classes }}"
+    class="{{ $tw->merge($classes, $attributes->get('class') ?? '') }}"
 >
   {{ $slot }}
 </x-accordion.primitive.item>

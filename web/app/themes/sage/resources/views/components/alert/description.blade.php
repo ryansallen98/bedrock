@@ -1,6 +1,6 @@
 <{{ $tag }}
     data-slot="{{ $dataSlot }}"
-    class="{{ $classes }}"
+    class="{{ $tw->merge($classes, $attributes->get('class') ?? '') }}"
     {{ $attributes->except('class') }}
 >
     {{ $slot }}

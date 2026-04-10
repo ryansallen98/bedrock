@@ -3,7 +3,7 @@
     data-mode="{{ $modeKey }}"
     @if ($nMonths > 1) data-multiple-months="true" @endif
     x-data="calendar(@js($calConfig))"
-    class="{{ $rootClass }}"
+    class="{{ $tw->merge($rootClass, $attributes->get('class') ?? '') }}"
     x-on:keydown="onGridKeydown($event)"
     x-on:focusin="onGridFocusin($event)"
     {{ $attributes->except('class') }}

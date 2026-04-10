@@ -1,4 +1,4 @@
-<x-accordion.primitive.trigger {{ $attributes->except('class') }} class="{{ $classes }}">
+<x-accordion.primitive.trigger {{ $attributes->except('class') }} class="{{ $tw->merge($classes, $attributes->get('class') ?? '') }}">
   {{ $slot }}
   <x-lucide-chevron-down
     data-slot="accordion-trigger-icon"

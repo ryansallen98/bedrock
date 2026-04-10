@@ -1,3 +1,3 @@
-<li data-slot="{{ $dataSlot }}" class="{{ $classes }}" {{ $attributes->except(['class', 'dataSlot']) }}>
+<li data-slot="{{ $dataSlot }}" class="{{ $tw->merge($classes, $attributes->get('class') ?? '') }}" {{ $attributes->except(['class', 'dataSlot']) }}>
     {{ $slot }}
 </li>

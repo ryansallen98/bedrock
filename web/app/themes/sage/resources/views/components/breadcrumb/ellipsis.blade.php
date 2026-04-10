@@ -1,6 +1,6 @@
 <span
     data-slot="{{ $dataSlot }}"
-    class="{{ $classes }}"
+    class="{{ $tw->merge($classes, $attributes->get('class') ?? '') }}"
     {{ $attributes->except(['class', 'dataSlot']) }}
 >
     <span class="sr-only">{{ __('More breadcrumbs', 'sage') }}</span>

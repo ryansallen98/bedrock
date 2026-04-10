@@ -601,7 +601,7 @@
           </div>
         </div>
       </div>
-      <div class="grid w-full max-w-6xl grid-cols-1 gap-10 xl:grid-cols-3">
+      <div class="grid w-fit max-w-6xl grid-cols-1 gap-10 xl:grid-cols-3">
         <div class="min-w-0 space-y-2">
           <p class="text-muted-foreground text-xs font-medium uppercase tracking-wide">
             {!! __('Two months (label caption)', 'sage') !!}

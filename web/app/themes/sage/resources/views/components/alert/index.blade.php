@@ -1,7 +1,7 @@
 <div
   data-slot="{{ $dataSlot }}"
   role="{{ $role }}"
-  class="{{ $classes }}"
+  class="{{ $tw->merge($classes, $attributes->get('class') ?? '') }}"
   {{ $attributes->except('class') }}
 >
   {{ $slot }}

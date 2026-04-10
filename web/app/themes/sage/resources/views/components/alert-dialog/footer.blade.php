@@ -1,3 +1,3 @@
-<div data-slot="{{ $dataSlot }}" class="{{ $classes }}" {{ $attributes->except('class') }}>
+<div data-slot="{{ $dataSlot }}" class="{{ $tw->merge($classes, $attributes->get('class') ?? '') }}" {{ $attributes->except('class') }}>
     {{ $slot }}
 </div>

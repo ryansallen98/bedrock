@@ -6,7 +6,7 @@
     <x-alert-dialog.primitive.content
         :size="$size"
         data-slot="{{ $dataSlot }}"
-        class="{{ $panelClasses }}"
+        class="{{ $tw->merge($panelClasses, $attributes->get('class') ?? '') }}"
         {{ $attributes->except(['size', 'dataSlot', 'class', 'duration']) }}
     >
         {{ $slot }}

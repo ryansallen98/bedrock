@@ -2,7 +2,7 @@
     data-slot="{{ $dataSlot }}"
     role="presentation"
     aria-hidden="true"
-    class="{{ $classes }}"
+    class="{{ $tw->merge($classes, $attributes->get('class') ?? '') }}"
     {{ $attributes->except(['class', 'dataSlot']) }}
 >
     @if (isset($slot) && ! $slot->isEmpty())

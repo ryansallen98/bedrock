@@ -1,3 +1,11 @@
+## 1.0.69 — 2026-04-08
+
+- **Shadpine UI (Blade):** Same **`$tw->merge($…, $attributes->get('class') ?? '')`** guard on every class-component root that pairs **`class="{{ … }}"`** with **`$attributes->except(…'class'…)`** — **alert** (root + parts), **badge**, **button** / **button.icon**, **button-group** (root, text, separator), **aspect-ratio**, **breadcrumb** (nav list + item/link/page/separator/ellipsis), **alert-dialog** (root, footer/header/media, trigger, title, description, action, cancel, content panel), **native-select** (**optgroup**, **option**). Prevents dropped consumer **`class`** when **`render()`** runs before the attribute bag is hydrated.
+
+## 1.0.68 — 2026-04-08
+
+- **Shadpine UI (Blade):** **`components/calendar/index`**, **`accordion` root/item/trigger/content** — merge **`$attributes->get('class')`** with PHP defaults via shared **`$tw`** on the root element so kit **`class="…"`** on **`x-calendar`** and **`x-accordion.*`** applies after **`$attributes->except('class')`** (avoids dropped classes when compile order leaves **`render()`** without the bag).
+
 ## 1.0.67 — 2026-04-08
 
 - **Config (Shadpine parity):** Normalized **`config/components/*.php`** so root-only tokens sit under **`root`** (and **`icon`**, **`layout`**, **`meta`** where needed): **`button`** (**`root`** + **`icon.sizes`**), **`button_group`** (**`root`** replaces **`group`**), **`breadcrumb`** (**`root.list`**), **`native_select`** (**`root`** wrapper/select/icon), **`calendar`** (**`root`** + **`layout`** → **`ViewState::flattenCalendarTokenMap()`**), **`alert_dialog`** (**`meta.default_duration_segment`**). PHP consumers, **`ViewStateTest`**, **`docs/components/*`**.

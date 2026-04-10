@@ -1,7 +1,7 @@
 <{{ $tag }}
     data-slot="{{ $dataSlot }}"
     data-variant="{{ $variant }}"
-    class="{{ $classes }}"
+    class="{{ $tw->merge($classes, $attributes->get('class') ?? '') }}"
     {{ $attributes->except('class') }}
 >
   {{ $slot }}

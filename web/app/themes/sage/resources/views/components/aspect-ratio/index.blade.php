@@ -2,7 +2,7 @@
 <div
     data-slot="{{ $dataSlot }}"
     data-ratio="{{ $rw }}/{{ $rh }}"
-    class="{{ $classes }}"
+    class="{{ $tw->merge($classes, $attributes->get('class') ?? '') }}"
     style="aspect-ratio: {{ $rw }} / {{ $rh }}"
     {{ $attributes->except(['class', 'dataSlot', 'ratio', 'style']) }}
 >
