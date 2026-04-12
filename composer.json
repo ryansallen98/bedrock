@@ -41,13 +41,8 @@
     "roots/wordpress": "6.9.1",
     "roots/wp-config": "1.0.0",
     "wpackagist-plugin/woocommerce": "^10.5",
-    "wpackagist-plugin/wordpress-seo": "^26.9",
-    "wpackagist-plugin/acf-content-analysis-for-yoast-seo": "^3.2",
     "wpackagist-plugin/updraftplus": "^1.26",
-    "wpackagist-plugin/woocommerce-paypal-payments": "^3.4",
-    "wpackagist-plugin/cimo-image-optimizer": "^1.2",
-    "wpackagist-plugin/cache-enabler": "^1.8",
-    "wpackagist-plugin/woo-checkout-field-editor-pro": "^2.1"
+    "wpackagist-plugin/cimo-image-optimizer": "^1.2"
   },
   "require-dev": {
     "laravel/pint": "^1.18"
