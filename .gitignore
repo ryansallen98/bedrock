@@ -55,3 +55,7 @@ web/app/advanced-cache.php
 !web/app/plugins/acf-extended-pro/
 !web/app/plugins/webp-upload-optimizer
 !web/app/plugins/webp-upload-optimizer/
+
+# Misc
+.DS_Store
+/setup
