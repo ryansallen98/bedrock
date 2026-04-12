@@ -1,3 +1,6 @@
 [submodule "web/app/themes/sage"]
 	path = web/app/themes/sage
 	url = https://github.com/ryansallen98/sage
+[submodule "web/app/plugins/webp-upload-optimizer"]
+	path = web/app/plugins/webp-upload-optimizer
+	url = https://github.com/ryansallen98/webp-upload-optimizer
