@@ -8,24 +8,18 @@ WORKDIR /app
 
 COPY . .
 
-# Coolify: pass as build arguments (same names as .env) so ACF Pro + ACFE Pro
-# can install during composer install. Omitted vars skip COMPOSER_AUTH only.
+# Coolify: pass as build arguments (same names as .env) so ACF Pro
+# can install during composer install.
 ARG ACF_PRO_LICENSE_KEY
 ARG WP_DOMAIN
 ARG WP_HOME
-ARG ACFE_PRO_KEY
-ARG ACFE_PRO_URL
 ENV ACF_PRO_LICENSE_KEY=$ACF_PRO_LICENSE_KEY \
     WP_DOMAIN=$WP_DOMAIN \
     WP_HOME=$WP_HOME \
-    ACFE_PRO_KEY=$ACFE_PRO_KEY \
-    ACFE_PRO_URL=$ACFE_PRO_URL
+    COMPOSER_ALLOW_SUPERUSER=1
 
 RUN if [ -z "${WP_HOME:-}" ] && [ -n "${WP_DOMAIN:-}" ]; then \
       export WP_HOME="https://${WP_DOMAIN}"; \
-    fi \
- && if [ -z "${ACFE_PRO_URL:-}" ] && [ -n "${WP_DOMAIN:-}" ]; then \
-      export ACFE_PRO_URL="${WP_DOMAIN}"; \
     fi \
  && if [ -n "${ACF_PRO_LICENSE_KEY:-}" ] && [ -n "${WP_HOME:-}" ]; then \
       export COMPOSER_AUTH="$(php /app/scripts/composer/export-composer-auth.php)"; \

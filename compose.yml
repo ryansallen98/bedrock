@@ -3,15 +3,13 @@ services:
     build:
       context: .
       target: runtime
-      # Passed into the php_vendor stage so `composer install` can reach ACF Pro /
-      # ACFE Pro. Docker Compose reads these from your project `.env` (same keys as
+      # Passed into the php_vendor stage so `composer install` can reach ACF Pro.
+      # Docker Compose reads these from your project `.env` (same keys as
       # .env.example). Build args can appear in image metadata — use CI secrets for prod.
       args:
         ACF_PRO_LICENSE_KEY: ${ACF_PRO_LICENSE_KEY:-}
         WP_DOMAIN: ${WP_DOMAIN:-}
         WP_HOME: ${WP_HOME:-}
-        ACFE_PRO_KEY: ${ACFE_PRO_KEY:-}
-        ACFE_PRO_URL: ${ACFE_PRO_URL:-}
     environment:
       WP_ENV: ${WP_ENV:-development}
       WP_HOME: ${WP_HOME:-http://localhost:8080}

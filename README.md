@@ -99,6 +99,16 @@ Optional overrides if you do not want the container to generate defaults:
     allowed from Docker). For a **Coolify-managed** database, use the internal
     service hostname Coolify provides, not `host.docker.internal`.
 
+If you install premium plugins during the image build, set the ACF Pro
+build-time vars in Coolify:
+
+-   `ACF_PRO_LICENSE_KEY`
+
+ACF Extended Pro is not installed through Composer in this starter anymore.
+Track it separately as a private plugin repository or submodule at
+`web/app/plugins/acf-extended-pro` so Docker and Coolify copy it into the image
+with the rest of the app code.
+
 Add persistent storage for:
 
 -   `/var/lib/mysql`
