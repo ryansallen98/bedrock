@@ -42,6 +42,73 @@ new WordPress projects:
 
 Clone once. Build fast. Ship clean.
 
+## Docker + Coolify
+
+This starter now includes a self-contained Docker runtime that is friendly to
+both local `docker compose` usage and Coolify Dockerfile deployments.
+
+-   The container runs OpenLiteSpeed, PHP, and an internal MariaDB instance.
+-   It is designed so the WordPress LiteSpeed Cache plugin can run against a
+    LiteSpeed-compatible server instead of Apache.
+-   On first boot it creates a database, generates WordPress salts, and persists
+    them under `/var/lib/bedrock`.
+-   `WP_SITEURL` is derived automatically from `WP_HOME` when not provided.
+-   Uploads, database files, and generated runtime secrets are designed to live
+    on persistent volumes.
+-   After WordPress is installed (installer or WP-CLI), Supervisor runs
+    `scripts/post-deploy.sh` once: activate the Sage theme, Acorn optimize/view
+    cache when available, flush rewrites.
+-   Local `compose.yml` pins `DB_HOST` to `127.0.0.1` for the bundled MariaDB. If
+    you point WordPress at an external database, edit that value (or use Coolify
+    env vars instead of Compose).
+
+### Local container usage
+
+```bash
+npm run docker:dev
+```
+
+That starts the app on `http://localhost:8080` by default.
+
+Useful commands:
+
+-   `npm run docker:build`
+-   `npm run docker:start`
+-   `npm run docker:stop`
+
+### Coolify setup
+
+Use the repository as a Dockerfile application.
+
+Set these runtime environment variables in Coolify:
+
+-   `WP_HOME`
+-   `WP_ENV`
+
+Optional overrides if you do not want the container to generate defaults:
+
+-   `WP_SITEURL`
+-   `DB_NAME`
+-   `DB_USER`
+-   `DB_PASSWORD`
+-   `DB_PREFIX`
+-   `DB_HOST` — omit or use `127.0.0.1` for the **bundled** MariaDB. If you set
+    `host.docker.internal`, WordPress talks to MySQL on the **host machine**;
+    you will see **connection refused** unless MySQL is running there and
+    listening on a reachable address (often `bind-address = 0.0.0.0` and a user
+    allowed from Docker). For a **Coolify-managed** database, use the internal
+    service hostname Coolify provides, not `host.docker.internal`.
+
+Add persistent storage for:
+
+-   `/var/lib/mysql`
+-   `/var/lib/bedrock`
+-   `/var/www/vhosts/localhost/bedrock/web/app/uploads`
+
+After the first deploy, WordPress will have its database and salts ready; if
+the site has not been installed yet, the normal WordPress installer will take
+over in the browser.
+
 ## Quick Start
 
 ```bash

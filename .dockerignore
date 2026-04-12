@@ -1,0 +1,14 @@
+.git
+.github
+.cursor
+.claude
+.env
+.env.*
+!.env.example
+node_modules
+vendor
+web/wp
+web/app/themes/sage/node_modules
+web/app/themes/sage/vendor
+web/app/themes/sage/public/build
+scripts/mcp-wp-acorn/node_modules

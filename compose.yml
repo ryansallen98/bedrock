@@ -1,0 +1,28 @@
+services:
+  bedrock:
+    build:
+      context: .
+      target: runtime
+    environment:
+      WP_ENV: ${WP_ENV:-development}
+      WP_HOME: ${WP_HOME:-http://localhost:8080}
+      WP_SITEURL: ${WP_SITEURL:-}
+      # Bundled MariaDB listens on loopback inside this container — not on the host.
+      # Use a literal here so a host `.env` with `DB_HOST=` cannot inject an empty
+      # value (breaks Bedrock immutable Dotenv + PHP `localhost` socket behavior).
+      DB_HOST: '127.0.0.1'
+      # Omit DB_NAME / DB_USER / DB_PASSWORD so they stay unset unless you add them;
+      # the entrypoint generates defaults on first boot.
+      DB_PREFIX: ${DB_PREFIX:-wp_}
+    ports:
+      - '${APP_PORT:-8080}:80'
+    restart: unless-stopped
+    volumes:
+      - bedrock-db:/var/lib/mysql
+      - bedrock-runtime:/var/lib/bedrock
+      - bedrock-uploads:/var/www/vhosts/localhost/bedrock/web/app/uploads
+
+volumes:
+  bedrock-db:
+  bedrock-runtime:
+  bedrock-uploads:

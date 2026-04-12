@@ -48,7 +48,7 @@ if (file_exists($root_dir . '/.env')) {
     $dotenv = Dotenv\Dotenv::create($repository, $root_dir, $env_files, false);
     $dotenv->load();
 
-    $dotenv->required(['WP_HOME', 'WP_SITEURL']);
+    $dotenv->required(['WP_HOME']);
     if (!env('DATABASE_URL')) {
         $dotenv->required(['DB_NAME', 'DB_USER', 'DB_PASSWORD']);
     }
@@ -70,8 +70,11 @@ if (!env('WP_ENVIRONMENT_TYPE') && in_array(WP_ENV, ['production', 'staging', 'd
 /**
  * URLs
  */
-Config::define('WP_HOME', env('WP_HOME'));
-Config::define('WP_SITEURL', env('WP_SITEURL'));
+$wp_home = env('WP_HOME');
+$wp_siteurl = env('WP_SITEURL') ?: ($wp_home ? rtrim($wp_home, '/') . '/wp' : null);
+
+Config::define('WP_HOME', $wp_home);
+Config::define('WP_SITEURL', $wp_siteurl);
 
 /**
  * Custom Content Directory
