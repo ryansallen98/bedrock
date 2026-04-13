@@ -19,6 +19,10 @@ repo gives you a ready-to-go foundation.
 -   📦 Composer-managed WordPress core, plugins, and themes
 -   🚀 Production-ready deployment structure
 
+**First-party plugins:** `.gitignore` ignores `web/app/plugins/*`; each tracked
+plugin needs an explicit `!web/app/plugins/{slug}/` negation (see the
+**Allowed Plugins** block in `.gitignore`) or Git will not pick it up.
+
 ### Theme Stack (Sage)
 
 -   🔧 Laravel Blade templating
@@ -64,6 +68,16 @@ This starter now includes a Docker runtime that is friendly to local
 -   Production deployments should use an external persistent MySQL/MariaDB
     service. The container now refuses to boot with the bundled MariaDB unless
     `BEDROCK_ALLOW_EMBEDDED_MARIADB=1` is set explicitly.
+
+**Composer `platform_check.php` (Docker build):** After the Sage theme
+`composer install`, the Dockerfile overwrites
+`web/app/themes/sage/vendor/composer/platform_check.php` with a no-op so
+runtime does not fatal when the Composer **build** image’s PHP/extensions
+differ from the OpenLiteSpeed **runtime** (PHP 8.3 here). That trades away
+Composer’s automatic guard for the theme autoloader; keep Sage
+`composer.json` `require.php` (and extensions) aligned with the container. If
+you run the build stage on the same PHP version/extensions as runtime, you can
+remove that step and rely on Composer’s generated check again.
 
 ### Local container usage
 

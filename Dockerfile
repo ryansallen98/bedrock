@@ -18,6 +18,9 @@ ENV ACF_PRO_LICENSE_KEY=$ACF_PRO_LICENSE_KEY \
     WP_HOME=$WP_HOME \
     COMPOSER_ALLOW_SUPERUSER=1
 
+# After Sage composer install: replace theme vendor/composer/platform_check.php with
+# a no-op when composer:* PHP/extensions differ from OpenLiteSpeed (lsphp83).
+# Tradeoff documented in README (Docker + Coolify).
 RUN if [ -z "${WP_HOME:-}" ] && [ -n "${WP_DOMAIN:-}" ]; then \
       export WP_HOME="https://${WP_DOMAIN}"; \
     fi \
@@ -37,7 +40,7 @@ RUN if [ -z "${WP_HOME:-}" ] && [ -n "${WP_DOMAIN:-}" ]; then \
     --no-interaction \
     --no-progress \
     --optimize-autoloader \
- && printf '%s\n' '<?php' '// Docker image PHP may be older than lockfile-declared minimum; runtime checks skipped.' > vendor/composer/platform_check.php
+ && printf '%s\n' '<?php' '// Intentional no-op; see Dockerfile header comment + README (Composer platform check).' > vendor/composer/platform_check.php
 
 FROM node:20-bookworm-slim AS theme_assets
 
