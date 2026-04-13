@@ -48,7 +48,7 @@ Current template: `sage`.
 
 ## Repo root shortcuts (optional)
 
-From Bedrock root **`package.json`**: **`npm run test:theme`** runs theme Pint + PHPUnit + **`npm run lint`** (ESLint + Prettier check) + Vitest + typecheck.
+From Bedrock root **`package.json`**: **`npm run test:theme`** runs theme Pint + PHPUnit + **`npm run lint`** (ESLint + Prettier check) + Vitest + **`npm run build`** (runs **`typecheck`** then Vite).
 
 ## Done checklist (theme)
 

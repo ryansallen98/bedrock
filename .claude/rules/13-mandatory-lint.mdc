@@ -33,6 +33,6 @@ When the task touches the relevant files, all applicable gates **must** pass (sa
 2. **`npm run lint`** (ESLint + Prettier check) — or **`npm run lint:fix`** then **`npm run lint`**.
 3. **`composer test`** / **`npm run test`** / **`npm run typecheck`** / **`npm run build`** as in **`10-testing-mandatory.mdc`**.
 
-**CI:** `.github/workflows/theme-tests.yml` runs Pint and **`npm run lint`**. **Root:** **`npm run test:theme`** includes both.
+**CI:** `.github/workflows/theme-tests.yml` runs Pint, **`npm run lint`**, PHPUnit, Vitest, and **`npm run build`** (runs **`typecheck`** then Vite). **Root:** **`npm run test:theme`** runs the same theme-side gates.
 
 **Skill:** **`linting-php-eslint`**.

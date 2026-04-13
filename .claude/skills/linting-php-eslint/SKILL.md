@@ -39,13 +39,13 @@ Pint covers theme **`app/`**, root **`*.php`** (e.g. `functions.php`, `block.php
 
 ## Bedrock root
 
-- **`npm run test:theme`**: runs theme **`composer run lint`**, **`composer test`**, **`npm run lint`**, **`npm run test`**, **`npm run typecheck`**.
+- **`npm run test:theme`**: runs theme **`composer run lint`**, **`composer test`**, **`npm run lint`**, **`npm run test`**, **`npm run build`** (includes **`typecheck`** + Vite).
 - Root **`composer run lint`**: Pint for Bedrock-managed PHP when you change files outside the theme (see **`bedrock-sage`**).
 
 ## Done checklist (theme)
 
 1. `composer run lint` (or `lint:fix` then `lint`) when PHP changed
 2. `npm run lint` (or `lint:fix` then `lint`) when TS/JS or covered assets changed
-3. Continue with **`testing-php-vitest`** (`composer test`, `npm run test`, `npm run typecheck`, `npm run build`)
+3. Continue with **`testing-php-vitest`** (`composer test`, `npm run test`, `npm run typecheck`, `npm run build` — or **`npm run build`** alone, which runs **`typecheck`** first)
 
 **CI:** `.github/workflows/theme-tests.yml` runs Pint and **`npm run lint`**.

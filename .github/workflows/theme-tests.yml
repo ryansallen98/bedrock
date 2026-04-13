@@ -49,5 +49,5 @@ jobs:
       - name: Vitest
         run: npm run test
 
-      - name: TypeScript check
-        run: npm run typecheck
+      - name: TypeScript + Vite production build
+        run: npm run build

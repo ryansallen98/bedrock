@@ -22,7 +22,7 @@ description: >-
 ./scripts/sync-agent-mirrors.sh   # after editing .cursor/rules/*.mdc or .claude/skills/
 composer run lint
 composer run lint:fix
-npm run test:theme          # theme: pint + composer test + eslint+prettier check + vitest + tsc
+npm run test:theme          # theme: pint + composer test + eslint+prettier check + vitest + build (tsc + vite)
 npm run format:theme        # Prettier check only (theme)
 ```
 

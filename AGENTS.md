@@ -82,7 +82,7 @@ Do **not** wait until stuck. Open the matching **`.claude/skills/*/SKILL.md`** (
 - Use **`./vendor/bin/phpunit --filter=TestName`** (or path to one file) while iterating; then **`composer test`** before done.
 - Do **not** delete tests or test files without **explicit user approval**.
 - Cover **happy paths, failures, and edge cases** for non-trivial behavior.
-- After focused tests pass, it is reasonable to suggest running the **full** theme suite (and **`npm run test:theme`** from repo root — Pint, PHPUnit, ESLint + Prettier check, Vitest, `tsc`) before merge.
+- After focused tests pass, it is reasonable to suggest running the **full** theme suite (and **`npm run test:theme`** from repo root — Pint, PHPUnit, ESLint + Prettier check, Vitest, **`npm run build`** / typecheck + Vite) before merge.
 
 ---
 
